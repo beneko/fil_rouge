@@ -1,9 +1,14 @@
+
 header {
-    background-color: red;
-    height: 200px;
+    background-color: #c70b0b;
 }
 
 footer {
-    background-color: #999999;
+    background-color: #4e4848;
     height: 180px;
+}
+
+.btn {
+    display: inline-block;
+    transition: 0.2s ease;
 }
