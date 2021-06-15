@@ -83,5 +83,8 @@ class Marques
         return $this;
     }
 
+    public function __tostring():string{
+        return $this->nomMarque;
+    }
 
 }

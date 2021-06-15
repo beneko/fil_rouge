@@ -45,5 +45,8 @@ class Roles
         return $this;
     }
 
+    public function __tostring():string{
+        return $this->nomRole;
+    }
 
 }

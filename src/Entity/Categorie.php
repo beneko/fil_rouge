@@ -86,5 +86,9 @@ class Categorie
         return $this;
     }
 
+    public function __tostring():string{
+        return $this->nomCat;
+    }
+
 
 }
