@@ -1,14 +1,60 @@
 
 header {
-    background-color: #c70b0b;
+    background-color: #c70b0b !important;
 }
 
-footer {
-    background-color: #4e4848;
-    height: 180px;
-}
-
-.btn {
+.submit {
     display: inline-block;
     transition: 0.2s ease;
 }
+
+.foot {
+    background-color: #313131;
+}
+
+/*search*/
+.search {
+
+    font-family: Arial;
+    font-size: 16px;
+    padding: 10px 25px;
+    outline: none;
+    border-radius: 0px 25px 25px 0px;
+    position: absolute;
+
+}
+
+.submit {
+    width: 50px;
+    height: 48px;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px 0px 0px 25px;
+    position: relative;
+    left: -50px;
+    top: 0.5px;
+    background: #5d5555;
+
+}
+
+
+.spansearch {
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.btn {
+    border-radius: 90px;
+    border-color: #313131;
+    cursor: pointer;
+    transition: 0.7s;
+    border-collapse: unset;
+}
+
+/*body{*/
+/*    min-height: 100vh !important;*/
+/*    display: grid !important;*/
+/*    grid-template-rows: auto 1fr auto !important;*/
+/*}*/
