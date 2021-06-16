@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use App\Repository\UtilisateursRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateursRepository::class)
  */
-class Utilisateurs
+class Utilisateurs implements UserInterface
 {
     /**
      * @ORM\Id
@@ -16,6 +17,17 @@ class Utilisateurs
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $mail;
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string", length=255)
+     */
+    private $mot_de_passe;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -30,17 +42,7 @@ class Utilisateurs
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $mot_de_passe;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $telephone;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $mail;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -63,20 +65,96 @@ class Utilisateurs
     private $date_naissance;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Pays::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Pays::class, inversedBy="nom_pays")
      */
     private $id_pays;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Roles::class)
+     * @ORM\ManyToOne(targetEntity=roles::class)
      * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="json")
      */
-    private $id_role;
+    private $id_role_id = [];
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(string $mail): self
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->mail;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): ?roles
+    {
+        $id_role_id = $this->id_role_id;
+        // guarantee every user at least has ROLE_USER
+        $id_role_id[] = 'ROLE_USER';
+
+        return array_unique($id_role_id);
+    }
+
+    public function setRoles(?roles $id_role_id): self
+    {
+        $this->id_role_id = $id_role_id;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->mot_de_passe;
+    }
+
+    public function setPassword(string $mot_de_passe): self
+    {
+        $this->mot_de_passe = $mot_de_passe;
+
+        return $this;
+    }
+
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getNom(): ?string
@@ -103,18 +181,6 @@ class Utilisateurs
         return $this;
     }
 
-    public function getMotDePasse(): ?string
-    {
-        return $this->mot_de_passe;
-    }
-
-    public function setMotDePasse(string $mot_de_passe): self
-    {
-        $this->mot_de_passe = $mot_de_passe;
-
-        return $this;
-    }
-
     public function getTelephone(): ?string
     {
         return $this->telephone;
@@ -123,18 +189,6 @@ class Utilisateurs
     public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
-
-        return $this;
-    }
-
-    public function getMail(): ?string
-    {
-        return $this->mail;
-    }
-
-    public function setMail(string $mail): self
-    {
-        $this->mail = $mail;
 
         return $this;
     }
@@ -187,26 +241,14 @@ class Utilisateurs
         return $this;
     }
 
-    public function getIdPays(): ?Pays
+    public function getIdPays(): ?pays
     {
         return $this->id_pays;
     }
 
-    public function setIdPays(?Pays $id_pays): self
+    public function setIdPays(?pays $id_pays): self
     {
         $this->id_pays = $id_pays;
-
-        return $this;
-    }
-
-    public function getIdRole(): ?Roles
-    {
-        return $this->id_role;
-    }
-
-    public function setIdRole(?Roles $id_role): self
-    {
-        $this->id_role = $id_role;
 
         return $this;
     }

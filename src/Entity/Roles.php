@@ -31,11 +31,9 @@ class Roles
     {
         return $this->nom_role;
     }
-
-    public function setNomRole(string $nom_role): self
+    public function setNomRole(?string $nom_role): self
     {
         $this->nom_role = $nom_role;
-
         return $this;
     }
 
