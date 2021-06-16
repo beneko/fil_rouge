@@ -2,129 +2,81 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\UtilisateursRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Utilisateurs
- *
- * @ORM\Table(name="utilisateurs", indexes={@ORM\Index(name="id_role", columns={"id_role"}), @ORM\Index(name="id_pays", columns={"id_pays"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=UtilisateursRepository::class)
  */
 class Utilisateurs
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id_utilisateur", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
-    private $idUtilisateur;
+    private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nom", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="prenom", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $prenom;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="telephone", type="integer", nullable=false)
+     * @ORM\Column(type="string", length=255)
+     */
+    private $mot_de_passe;
+
+    /**
+     * @ORM\Column(type="string", length=255)
      */
     private $telephone;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="mail", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $mail;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="code_postal", type="integer", nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
-    private $codePostal;
+    private $code_postal;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="ville", type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $ville;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $adresse;
 
     /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="date_naissance", type="date", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateNaissance;
+    private $date_naissance;
 
     /**
-     * @var \Pays
-     *
-     * @ORM\ManyToOne(targetEntity="Pays")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_pays", referencedColumnName="id_pays")
-     * })
+     * @ORM\ManyToOne(targetEntity=Pays::class)
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $idPays;
+    private $id_pays;
 
     /**
-     * @var \Roles
-     *
-     * @ORM\ManyToOne(targetEntity="Roles")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_role", referencedColumnName="id_role")
-     * })
+     * @ORM\ManyToOne(targetEntity=Roles::class)
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $idRole;
+    private $id_role;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Reduction", inversedBy="idUtilisateur")
-     * @ORM\JoinTable(name="reduc_passee",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_utilisateur", referencedColumnName="id_utilisateur")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_reduc", referencedColumnName="id_reduc")
-     *   }
-     * )
-     */
-    private $idReduc;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
+    public function getId(): ?int
     {
-        $this->idReduc = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    public function getIdUtilisateur(): ?int
-    {
-        return $this->idUtilisateur;
+        return $this->id;
     }
 
     public function getNom(): ?string
@@ -151,12 +103,24 @@ class Utilisateurs
         return $this;
     }
 
-    public function getTelephone(): ?int
+    public function getMotDePasse(): ?string
+    {
+        return $this->mot_de_passe;
+    }
+
+    public function setMotDePasse(string $mot_de_passe): self
+    {
+        $this->mot_de_passe = $mot_de_passe;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }
 
-    public function setTelephone(int $telephone): self
+    public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
 
@@ -175,14 +139,14 @@ class Utilisateurs
         return $this;
     }
 
-    public function getCodePostal(): ?int
+    public function getCodePostal(): ?string
     {
-        return $this->codePostal;
+        return $this->code_postal;
     }
 
-    public function setCodePostal(?int $codePostal): self
+    public function setCodePostal(string $code_postal): self
     {
-        $this->codePostal = $codePostal;
+        $this->code_postal = $code_postal;
 
         return $this;
     }
@@ -192,7 +156,7 @@ class Utilisateurs
         return $this->ville;
     }
 
-    public function setVille(?string $ville): self
+    public function setVille(string $ville): self
     {
         $this->ville = $ville;
 
@@ -213,62 +177,37 @@ class Utilisateurs
 
     public function getDateNaissance(): ?\DateTimeInterface
     {
-        return $this->dateNaissance;
+        return $this->date_naissance;
     }
 
-    public function setDateNaissance(?\DateTimeInterface $dateNaissance): self
+    public function setDateNaissance(?\DateTimeInterface $date_naissance): self
     {
-        $this->dateNaissance = $dateNaissance;
+        $this->date_naissance = $date_naissance;
 
         return $this;
     }
 
     public function getIdPays(): ?Pays
     {
-        return $this->idPays;
+        return $this->id_pays;
     }
 
-    public function setIdPays(?Pays $idPays): self
+    public function setIdPays(?Pays $id_pays): self
     {
-        $this->idPays = $idPays;
+        $this->id_pays = $id_pays;
 
         return $this;
     }
 
     public function getIdRole(): ?Roles
     {
-        return $this->idRole;
+        return $this->id_role;
     }
 
-    public function setIdRole(?Roles $idRole): self
+    public function setIdRole(?Roles $id_role): self
     {
-        $this->idRole = $idRole;
+        $this->id_role = $id_role;
 
         return $this;
     }
-
-    /**
-     * @return Collection|Reduction[]
-     */
-    public function getIdReduc(): Collection
-    {
-        return $this->idReduc;
-    }
-
-    public function addIdReduc(Reduction $idReduc): self
-    {
-        if (!$this->idReduc->contains($idReduc)) {
-            $this->idReduc[] = $idReduc;
-        }
-
-        return $this;
-    }
-
-    public function removeIdReduc(Reduction $idReduc): self
-    {
-        $this->idReduc->removeElement($idReduc);
-
-        return $this;
-    }
-
 }

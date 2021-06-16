@@ -1,50 +1,60 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Produit{% endblock %}
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('css/styleH.css') }}">
+ {% endblock %}
+
 
 {% block body %}
-    <h1>Produit</h1>
+    <h1>{{ produit.nomProduit }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>IdProduit</th>
-                <td>{{ produit.idProduit }}</td>
-            </tr>
-            <tr>
-                <th>NomProduit</th>
-                <td>{{ produit.nomProduit }}</td>
-            </tr>
-            <tr>
-                <th>LibelleProduit</th>
-                <td>{{ produit.libelleProduit }}</td>
-            </tr>
-            <tr>
-                <th>PrixProduit</th>
-                <td>{{ produit.prixProduit }}</td>
-            </tr>
-            <tr>
-                <th>StockProduit</th>
-                <td>{{ produit.stockProduit }}</td>
-            </tr>
-            <tr>
-                <th>TauxTva</th>
-                <td>{{ produit.tauxTva }}</td>
-            </tr>
-            <tr>
-                <th>PdsProduit</th>
-                <td>{{ produit.pdsProduit }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ produit.image }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="content d-flex">
+        <div class="col-3">
+            <img src="{{asset('/images/')~produit.image}}">
+        </div>
 
-    <a href="{{ path('produit_index') }}">back to list</a>
+        <div class="col-6">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>NomProduit</th>
+                        <td>{{ produit.nomProduit }}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ produit.libelleProduit }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prix du {{ produit.nomProduit }}</th>
+                        <td>{{ produit.prixProduit }}</td>
+                    </tr>
+                    <tr>
+                        <th>Quantité restante du {{ produit.nomProduit }}</th>
+                        <td>{{ produit.stockProduit }}</td>
+                    </tr>
+                    <tr>
+                        <th>Taux de Tva inclus</th>
+                        <td>{{ produit.tauxTva }}</td>
+                    </tr>
+                    <tr>
+                        <th>Poids du {{ produit.nomProduit }} en kg</th>
+                        <td>{{ produit.pdsProduit }}</td>
+                    </tr>
 
-    <a href="{{ path('produit_edit', {'idProduit': produit.idProduit}) }}">edit</a>
+                    </tbody>
+                </table>
 
-    {{ include('produit/_delete_form.html.twig') }}
+            </div>
+
+
+    </div>
+
+    <div class="d-flex flex-row">
+    <a href="{{ path('produit_index') }}"class="btn btn-dark m-0">Retour Liste</a>
+
+    <a href="{{ path('produit_edit', {'idProduit': produit.idProduit}) }}" class="btn btn-warning m-0">Modifier</a>
+
+   {{ include('produit/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

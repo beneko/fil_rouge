@@ -2,85 +2,80 @@
 
 namespace App\Entity;
 
+use App\Repository\MarquesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Marques
- *
- * @ORM\Table(name="marques")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=MarquesRepository::class)
  */
 class Marques
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id_marque", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
-    private $idMarque;
+    private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nom_marque", type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private $nomMarque;
+    private $nom_marque;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="libelle_marque", type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $libelleMarque;
+    private $libelle_marque;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="logo_marque", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $logoMarque;
+    private $logo_marque;
 
-    public function getIdMarque(): ?int
+    public function getId(): ?int
     {
-        return $this->idMarque;
+        return $this->id;
     }
 
     public function getNomMarque(): ?string
     {
-        return $this->nomMarque;
+        return $this->nom_marque;
     }
 
-    public function setNomMarque(string $nomMarque): self
+    public function setNomMarque(string $nom_marque): self
     {
-        $this->nomMarque = $nomMarque;
+        $this->nom_marque = $nom_marque;
 
         return $this;
     }
 
     public function getLibelleMarque(): ?string
     {
-        return $this->libelleMarque;
+        return $this->libelle_marque;
     }
 
-    public function setLibelleMarque(?string $libelleMarque): self
+    public function setLibelleMarque(?string $libelle_marque): self
     {
-        $this->libelleMarque = $libelleMarque;
+        $this->libelle_marque = $libelle_marque;
 
         return $this;
     }
 
     public function getLogoMarque(): ?string
     {
-        return $this->logoMarque;
+        return $this->logo_marque;
     }
 
-    public function setLogoMarque(?string $logoMarque): self
+    public function setLogoMarque(?string $logo_marque): self
     {
-        $this->logoMarque = $logoMarque;
+        $this->logo_marque = $logo_marque;
 
         return $this;
+    }
+
+
+    public function __tostring():string{
+        return $this->nom_marque;
     }
 
 
