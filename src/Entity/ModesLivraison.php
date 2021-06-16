@@ -2,86 +2,74 @@
 
 namespace App\Entity;
 
+use App\Repository\ModesLivraisonRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ModesLivraison
- *
- * @ORM\Table(name="modes_livraison")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=ModesLivraisonRepository::class)
  */
 class ModesLivraison
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id_mode_liv", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
-    private $idModeLiv;
+    private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nom_mode_liv", type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private $nomModeLiv;
+    private $nom_mode;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="libelle_liv", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private $libelleLiv;
+    private $libelle_liv;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="delai_moy_liv", type="integer", nullable=false)
+     * @ORM\Column(type="integer")
      */
-    private $delaiMoyLiv;
+    private $delai_moy_liv;
 
-    public function getIdModeLiv(): ?int
+    public function getId(): ?int
     {
-        return $this->idModeLiv;
+        return $this->id;
     }
 
-    public function getNomModeLiv(): ?string
+    public function getNomMode(): ?string
     {
-        return $this->nomModeLiv;
+        return $this->nom_mode;
     }
 
-    public function setNomModeLiv(string $nomModeLiv): self
+    public function setNomMode(string $nom_mode): self
     {
-        $this->nomModeLiv = $nomModeLiv;
+        $this->nom_mode = $nom_mode;
 
         return $this;
     }
 
     public function getLibelleLiv(): ?string
     {
-        return $this->libelleLiv;
+        return $this->libelle_liv;
     }
 
-    public function setLibelleLiv(string $libelleLiv): self
+    public function setLibelleLiv(string $libelle_liv): self
     {
-        $this->libelleLiv = $libelleLiv;
+        $this->libelle_liv = $libelle_liv;
 
         return $this;
     }
 
     public function getDelaiMoyLiv(): ?int
     {
-        return $this->delaiMoyLiv;
+        return $this->delai_moy_liv;
     }
 
-    public function setDelaiMoyLiv(int $delaiMoyLiv): self
+    public function setDelaiMoyLiv(int $delai_moy_liv): self
     {
-        $this->delaiMoyLiv = $delaiMoyLiv;
+        $this->delai_moy_liv = $delai_moy_liv;
 
         return $this;
     }
-
-
 }

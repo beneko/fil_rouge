@@ -2,26 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\Categorie;
+use App\Entity\Produits;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategorieType extends AbstractType
+class ProduitsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nomCat')
-            ->add('libelleCat')
-            ->add('idCat1')
+            ->add('nom_produit')
+            ->add('libelle_produit')
+            ->add('prix_produit')
+            ->add('stock_produit')
+            ->add('pds_produit')
+            ->add('id_marque')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Categorie::class,
+            'data_class' => Produits::class,
         ]);
     }
 }
