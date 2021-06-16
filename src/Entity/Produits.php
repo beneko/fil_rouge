@@ -48,6 +48,16 @@ class Produits
      */
     private $id_marque;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Categories::class)
+     */
+    private $categorie;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +131,30 @@ class Produits
     public function setIdMarque(?Marques $id_marque): self
     {
         $this->id_marque = $id_marque;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categories
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categories $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }
