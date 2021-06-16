@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LigCom index{% endblock %}
+
+{% block body %}
+    <h1>LigCom index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Qte_produit</th>
+                <th>Remise</th>
+                <th>Com_sous_tot</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lig_com in lig_coms %}
+            <tr>
+                <td>{{ lig_com.id }}</td>
+                <td>{{ lig_com.qteProduit }}</td>
+                <td>{{ lig_com.remise }}</td>
+                <td>{{ lig_com.comSousTot }}</td>
+                <td>
+                    <a href="{{ path('lig_com_show', {'id': lig_com.id}) }}">show</a>
+                    <a href="{{ path('lig_com_edit', {'id': lig_com.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('lig_com_new') }}">Create new</a>
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommandesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +12,25 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Commandes
 {
+
+
+    // ...
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $statut = self::STATUT_PANIER;
+
+    /**
+     * An order that is in progress, not placed yet.
+     *
+     * @var string
+     */
+    const STATUT_PANIER = 'panier';
+
+
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -44,6 +65,17 @@ class Commandes
      */
     private $id_reduc;
 
+    /**
+     * @ORM\OneToMany(targetEntity=LigCom::class, mappedBy="refCommande", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $contenu_panier;
+//objetspanier
+
+    public function __construct()
+    {
+        $this->contenu_panier = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,9 +93,19 @@ class Commandes
         return $this;
     }
 
-    public function getTotalCommande(): ?string
+    public function getTotalCommande(): float
     {
-        return $this->total_commande;
+//        return $this->total_commande;
+        $total = 0;
+
+        foreach ($this->getContenuPanier() as $item) {
+            $total += $item->getComSousTot();
+        }
+
+        return $total;
+
+
+
     }
 
     public function setTotalCommande(string $total_commande): self
@@ -108,4 +150,64 @@ class Commandes
 
         return $this;
     }
+
+
+    /**
+     * @return Collection|LigCom[]
+     */
+    public function getContenuPanier(): Collection
+    {
+        return $this->contenu_panier;
+    }
+
+    public function addContenuPanier(LigCom $objet): self
+    {
+//        if (!$this->contenu_panier->contains($contenuPanier)) {
+//            $this->contenu_panier[] = $contenuPanier;
+//            $contenuPanier->setRefCommande($this);
+//        }
+//
+//        return $this;
+
+
+
+        foreach ($this->getContenuPanier() as $existingItem) {
+            // The item already exists, update the quantity
+            if ($existingItem->equals($objet)) {
+                $existingItem->setQteProduit(
+                    $existingItem->getQteProduit() + $objet->getQteProduit()
+                );
+                return $this;
+            }
+        }
+
+        $this->objet[] = $objet;
+        $objet->setRefCommande($this);
+
+        return $this;
+
+    }
+
+    public function removeContenuPanier(LigCom $contenuPanier): self
+    {
+//        if ($this->contenu_panier->removeElement($contenuPanier)) {
+//            // set the owning side to null (unless already changed)
+//            if ($contenuPanier->getRefCommande() === $this) {
+//                $contenuPanier->setRefCommande(null);
+//            }
+//        }
+//
+//        return $this;
+
+
+        foreach ($this->getContenuPanier() as $item) {
+            $this->removeContenuPanier($item);
+        }
+        return $this;
+
+    }
+
+
+
+
 }

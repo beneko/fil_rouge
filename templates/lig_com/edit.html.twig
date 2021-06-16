@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit LigCom{% endblock %}
+
+{% block body %}
+    <h1>Edit LigCom</h1>
+
+    {{ include('lig_com/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('lig_com_index') }}">back to list</a>
+
+    {{ include('lig_com/_delete_form.html.twig') }}
+{% endblock %}
