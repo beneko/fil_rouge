@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+   
+    {# Link style.css #}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {# Slide Picture #}
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner rounded mx-auto d-block col-md-12">
+            <div class="carousel-item active">
+                <img src="{{ asset('images/slide1.jpg') }}" class="image img-fluid d-block w-100" alt=" iphone">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('images/slide2.jpg') }}" class="image img-fluid d-block w-100" alt="macbook">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    {# Grid #}
+        <div class="row py-5 justify-content-center">
+            <div class="col-lg-3 col-sm-12">
+                <div class=""><a href=""><img class="img-thumbnail" src="{{ asset('images/img12.jpg') }}" alt=""><p>Samsung Galaxy Z Flip SM-F700F/DS</p></a></div>
+            </div>
+            <div class="col-lg-3 col-sm-12">
+                <div class=""><a href=""><img class="img-thumbnail" src="{{ asset('images/img11.jpg') }}" alt=""><p>Huawei Nova 7i JNY-LX1</p></a></div>
+            </div>
+            <div class="col-lg-3 col-sm-12">
+                <div class=""><a href=""><img class="img-thumbnail" src="{{ asset('images/img10.jpg') }}" alt=""><p>Galaxy S20 FE SM</p></a></div>
+            </div>
+        </div>
+    <div class="row py-5 justify-content-center">
+        <div class="col-lg-3 col-sm-12">
+            <div class=""><a href=""><img class="img-thumbnail" src="{{ asset('images/img7.jpg') }}" alt=""><p>LG 34GL750-B</p></a></div>
+        </div>
+        <div class="col-lg-3 col-sm-12">
+            <div class=""><a href=""><img class="img-thumbnail" src="{{ asset('images/img14.jpg.') }}" alt=""><p>Lenovo Tab M10 X505X</p></a></div>
+        </div>
+        <div class="col-lg-3 col-sm-12">
+            <div class=""><a href=""><img class="img-thumbnail" src="{{ asset('images/img6.jpg') }}" alt=""><p>Lenovo IdeaPad S145 - 15IGM</p></a></div>
+        </div>
+    </div>
+
+{% endblock %}

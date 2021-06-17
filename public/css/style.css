@@ -46,11 +46,15 @@ header {
 }
 
 .btn {
-    border-radius: 90px;
     border-color: #313131;
     cursor: pointer;
-    transition: 0.7s;
-    border-collapse: unset;
+    transition: 0.6s;
+}
+
+.image {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 /*body{*/
