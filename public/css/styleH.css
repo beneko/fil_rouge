@@ -1,9 +1,13 @@
 H1{
-   color:darkgreen;
+   color: #6f786f;
+}
+
+body{
+   min-height: 100vh !important;
+   display: grid !important;
+   grid-template-rows: auto 1fr auto !important;
 }
 
 
-tr{
-   font-size: 16px;
-   color: cornflowerblue;
-}
+
+
