@@ -11,3 +11,13 @@ body{
 
 
 
+/*<<<<<<< HEAD=======*/
+td{
+   font-size: 18px;
+}
+
+th{
+   font-size: 18px;
+   color: cornflowerblue;
+}
+/*>>>>>>> eccaa86dfada1727d9867b5e332fb3d38d58a7f1*/
