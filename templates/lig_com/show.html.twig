@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LigCom{% endblock %}
+
+{% block body %}
+    <h1>LigCom</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ lig_com.id }}</td>
+            </tr>
+            <tr>
+                <th>Qte_produit</th>
+                <td>{{ lig_com.qteProduit }}</td>
+            </tr>
+            <tr>
+                <th>Remise</th>
+                <td>{{ lig_com.remise }}</td>
+            </tr>
+            <tr>
+                <th>Com_sous_tot</th>
+                <td>{{ lig_com.comSousTot }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('lig_com_index') }}">back to list</a>
+
+    <a href="{{ path('lig_com_edit', {'id': lig_com.id}) }}">edit</a>
+
+    {{ include('lig_com/_delete_form.html.twig') }}
+{% endblock %}

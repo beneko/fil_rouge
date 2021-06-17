@@ -1,0 +1,23 @@
+@media screen and (max-width: 420px)
+{
+
+    th{
+        display: none;
+    }
+
+    tr{
+        font-size: 18px;
+        font-weight: bold;
+
+    }
+
+    .poids{
+        display: none;
+
+    }
+
+}
+
+
+
+

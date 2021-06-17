@@ -44,6 +44,13 @@ class LigCom
      */
     private $com_sous_tot;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Commandes::class, inversedBy="contenu_panier")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $refCommande;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -99,7 +106,9 @@ class LigCom
 
     public function getComSousTot(): ?string
     {
-        return $this->com_sous_tot;
+//        return $this->com_sous_tot;
+        return $this->getIdProduit()->getPrixProduit() * $this->getQteProduit();
+
     }
 
     public function setComSousTot(string $com_sous_tot): self
@@ -108,4 +117,35 @@ class LigCom
 
         return $this;
     }
+
+
+    public function getRefCommande(): ?Commandes
+    {
+        return $this->refCommande;
+    }
+
+    public function setRefCommande(?Commandes $refCommande): self
+    {
+        $this->refCommande = $refCommande;
+
+        return $this;
+    }
+
+
+    /**
+     * Tests if the given item given corresponds to the same order item.
+     *
+     * @param LigCom $objet
+     *
+     * @return bool
+     */
+    public function equals(LigCom $objet): bool
+    {
+        return $this->getIdProduit()->getId() === $objet->getIdProduit()->getId();
+    }
+
+
+
+
+
 }
