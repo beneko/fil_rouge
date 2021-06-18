@@ -70,10 +70,32 @@ class Commandes
      */
     private $contenu_panier;
 //objetspanier
+    /**
+     * @var array
+     */
+    private $objet;
 
     public function __construct()
     {
         $this->contenu_panier = new ArrayCollection();
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getObjet(): array
+    {
+        return $this->objet;
+    }
+
+
+    /**
+     * @param array $objet
+     */
+    public function setObjet(array $objet): void
+    {
+        $this->objet = $objet;
     }
 
     public function getId(): ?int
@@ -93,6 +115,26 @@ class Commandes
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getStatut(): string
+    {
+        return $this->statut;
+    }
+
+
+    /**
+     * @param string $statut
+     */
+    public function setStatut(string $statut): self
+    {
+        $this->statut = $statut;
+    }
+
+
+
+
     public function getTotalCommande(): float
     {
 //        return $this->total_commande;
@@ -103,8 +145,6 @@ class Commandes
         }
 
         return $total;
-
-
 
     }
 

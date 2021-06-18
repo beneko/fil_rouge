@@ -32,6 +32,11 @@ class Categories
      */
     private $id_cat;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $image_cat;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +80,18 @@ class Categories
 
     public function __tostring():string{
         return $this->nom_cat;
+    }
+
+    public function getImageCat(): ?string
+    {
+        return $this->image_cat;
+    }
+
+    public function setImageCat(?string $image_cat): self
+    {
+        $this->image_cat = $image_cat;
+
+        return $this;
     }
 
 

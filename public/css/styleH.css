@@ -1,9 +1,23 @@
 H1{
-   color:darkgreen;
+   color: #6f786f;
+}
+
+body{
+   min-height: 100vh !important;
+   display: grid !important;
+   grid-template-rows: auto 1fr auto !important;
 }
 
 
-tr{
-   font-size: 16px;
+
+
+/*<<<<<<< HEAD=======*/
+td{
+   font-size: 18px;
+}
+
+th{
+   font-size: 18px;
    color: cornflowerblue;
 }
+/*>>>>>>> eccaa86dfada1727d9867b5e332fb3d38d58a7f1*/
