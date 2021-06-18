@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <th>Mot_de_pass</th>
-                <td>{{ utilisateur.motDePass }}</td>
+                <td>{{ utilisateur.motDePasse }}</td>
             </tr>
             <tr>
                 <th>Nom</th>
@@ -49,7 +49,11 @@
             </tr>
             <tr>
                 <th>Id_role_id</th>
-                <td>{{ utilisateur.idRoleId ? utilisateur.idRoleId|json_encode : '' }}</td>
+                <td>{{ utilisateur.idRoleId ? utilisateur.idRoleId : '' }}</td>
+            </tr>
+            <tr>
+                <th>Id_pays_id</th>
+                <td>{{ utilisateur.idPaysId ? utilisateur.idPaysId : '' }}</td>
             </tr>
         </tbody>
     </table>

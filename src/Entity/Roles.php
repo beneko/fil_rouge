@@ -6,6 +6,7 @@ use App\Repository\RolesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="roles")
  * @ORM\Entity(repositoryClass=RolesRepository::class)
  */
 class Roles
@@ -13,12 +14,12 @@ class Roles
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id" , type="integer")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(name="nom_role" , type="string", length=255)
      */
     private $nom_role;
 
@@ -37,7 +38,8 @@ class Roles
         return $this;
     }
 
-    public function __tostring():string{
+    public function __toString(): string
+    {
         return $this->nom_role;
     }
 

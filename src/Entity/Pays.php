@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="pays")
  * @ORM\Entity(repositoryClass=PaysRepository::class)
  */
 class Pays
@@ -15,12 +16,12 @@ class Pays
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id" , type="integer")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(name="nom_pays" , type="string", length=255)
      */
     private $nom_pays;
 
@@ -30,38 +31,19 @@ class Pays
         return $this->id;
     }
 
-
-    public function __tostring():string{
-        return $this->nom_pays;
-    }
-
-    /**
-     * @return Collection|Utilisateurs[]
-     */
-    public function getNomPays(): Collection
+    public function getNomPays(): ?string
     {
         return $this->nom_pays;
     }
 
-    public function addNomPays(Utilisateurs $nom_pays): self
+    public function setNomPays($nom_pays): self
     {
-        if (!$this->nom_pays->contains($nom_pays)) {
-            $this->$nom_pays[] = $nom_pays;
-            $nom_pays->setIdPays($this);
-        }
-
+        $this->nom_pays = $nom_pays;
         return $this;
     }
 
-    public function removeNomPays(Utilisateurs $nom_pays): self
-    {
-        if ($this->nom_pays->removeElement($nom_pays)) {
-            // set the owning side to null (unless already changed)
-            if ($nom_pays->getIdPays() === $this) {
-                $nom_pays->setIdPays(null);
-            }
-        }
 
-        return $this;
+    public function __toString():string{
+        return $this->nom_pays;
     }
 }

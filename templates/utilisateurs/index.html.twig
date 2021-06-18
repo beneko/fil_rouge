@@ -33,7 +33,8 @@
                 <td>{{ utilisateur.ville }}</td>
                 <td>{{ utilisateur.adresse }}</td>
                 <td>{{ utilisateur.dateNaissance ? utilisateur.dateNaissance|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ utilisateur.idRoleId ? utilisateur.idRoleId|json_encode : '' }}</td>
+                <td>{{ utilisateur.idRoleId ? utilisateur.idRoleId : '' }}</td>
+                <td>{{ utilisateur.idPaysId ? utilisateur.idPaysId : '' }}</td>
                 <td>
                     <a href="{{ path('utilisateurs_show', {'id': utilisateur.id}) }}">show</a>
                     <a href="{{ path('utilisateurs_edit', {'id': utilisateur.id}) }}">edit</a>
