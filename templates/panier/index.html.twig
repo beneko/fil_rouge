@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ dump(objets) }}
+    {% if  objets | length > 0 %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>Produit</th>
+        <th>Prix unitaire</th>
+        <th>Quantite</th>
+        <th>total</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {%  for objet in objets %}
+    <tr>
+        <td>{{ objet.produit.nomProduit }}</td>
+        <td>{{ objet.produit.prixProduit }} €</td>
+        <td>{{ objet.quantite }}</td>
+        <td>{{ objet.produit.prixProduit*objet.quantite }} €</td>
+        <td ><a href="{{ path('panier_remove', {'id': objet.produit.id}) }}" class="text-danger"><i class="far fa-trash-alt"></i></a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3" class="text-end">Total :</td>
+        <td>{{ total }} €</td>
+    </tr>
+    </tfoot>
+</table>
+    {% else %}
+        <h2>vide</h2>
+    {% endif %}
+    <script src="https://kit.fontawesome.com/066785f9e9.js" crossorigin="anonymous"></script>
+{% endblock %}
