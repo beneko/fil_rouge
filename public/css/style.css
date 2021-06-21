@@ -12,38 +12,13 @@ header {
     background-color: #313131;
 }
 
-/*search*/
-.search {
-
-    font-family: Arial;
-    font-size: 16px;
-    padding: 10px 25px;
-    outline: none;
-    border-radius: 0px 25px 25px 0px;
-    position: absolute;
-
-}
-
-.submit {
-    width: 50px;
-    height: 48px;
-    border: none;
-    cursor: pointer;
-    border-radius: 25px 0px 0px 25px;
-    position: relative;
-    left: -50px;
-    top: 0.5px;
-    background: #5d5555;
-
-}
-
 
 .panier .compte {
     border: #2f3640 ;
     cursor: pointer;
     transition: 0.6s;
 }
-.panier:hover{
+.panier:hover {
     border: 1px solid #999999 ;
     background-color: #c70b0b ;
 }
@@ -51,6 +26,7 @@ header {
     border: 1px solid #999999 ;
     background-color: #c70b0b ;
 }
+
 
 .image {
     max-width: 100%;
@@ -63,3 +39,13 @@ header {
 /*    display: grid !important;*/
 /*    grid-template-rows: auto 1fr auto !important;*/
 /*}*/
+
+
+
+/*results for search*/
+.results {
+    position: relative;
+    border-radius: 0px 0px 25px 25px ;
+    background-color: #FFFFFF;
+    direction: rtl;
+}
