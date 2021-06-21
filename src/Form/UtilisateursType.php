@@ -20,8 +20,6 @@ class UtilisateursType extends AbstractType
             ->add('code_postal')
             ->add('ville')
             ->add('adresse')
-            ->add('date_naissance')
-            ->add('id_role_id')
             ->add('id_pays_id')
         ;
     }

@@ -1,4 +1,20 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<div class="row justify-content-center">
+    <div class="col-sm-6">
+
+        {{ form_row(form.nom) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.prenom) }}
+        {{ form_row(form.telephone) }}
+        {{ form_row(form.mail) }}
+        {{ form_row(form.mot_de_passe) }}
+        {{ form_row(form.id_pays_id) }}
+        {{ form_row(form.ville) }}
+        {{ form_row(form.adresse) }}
+        {{ form_row(form.code_postal) }}
+
+    </div>
+</div>
+
+<button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

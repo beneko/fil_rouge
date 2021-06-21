@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\UtilisateursRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Test\AssertingContextualValidatort;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @ORM\Table(name="Utilisateurs", indexes={@ORM\Index(name="nom_pays", columns={"nom_pays"})})
@@ -138,7 +140,7 @@ class Utilisateurs implements UserInterface
 
     }
 
-    public function setIdRoleId(?roles $id_role_id): self
+    public function setIdRoleId(?roles $id_role_id): int
     {
         $this->id_role_id = $id_role_id;
 
