@@ -8,38 +8,41 @@
     <table class="table">
         <thead>
             <tr>
-                <th>IdUtilisateur</th>
+                <th>Id</th>
+                <th>Mail</th>
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Telephone</th>
-                <th>Mail</th>
-                <th>CodePostal</th>
+                <th>Code_postal</th>
                 <th>Ville</th>
                 <th>Adresse</th>
-                <th>DateNaissance</th>
+                <th>Date_naissance</th>
+                <th>nom_role</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for utilisateur in utilisateurs %}
             <tr>
-                <td>{{ utilisateur.idUtilisateur }}</td>
+                <td>{{ utilisateur.id }}</td>
+                <td>{{ utilisateur.mail }}</td>
                 <td>{{ utilisateur.nom }}</td>
                 <td>{{ utilisateur.prenom }}</td>
                 <td>{{ utilisateur.telephone }}</td>
-                <td>{{ utilisateur.mail }}</td>
                 <td>{{ utilisateur.codePostal }}</td>
                 <td>{{ utilisateur.ville }}</td>
                 <td>{{ utilisateur.adresse }}</td>
-                <td>{{ utilisateur.dateNaissance ? utilisateur.dateNaissance|date('Y-m-d') : '' }}</td>
+                <td>{{ utilisateur.dateNaissance ? utilisateur.dateNaissance|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ utilisateur.idRoleId ? utilisateur.idRoleId : '' }}</td>
+                <td>{{ utilisateur.idPaysId ? utilisateur.idPaysId : '' }}</td>
                 <td>
-                    <a href="{{ path('utilisateurs_show', {'idUtilisateur': utilisateur.idUtilisateur}) }}">show</a>
-                    <a href="{{ path('utilisateurs_edit', {'idUtilisateur': utilisateur.idUtilisateur}) }}">edit</a>
+                    <a href="{{ path('utilisateurs_show', {'id': utilisateur.id}) }}">show</a>
+                    <a href="{{ path('utilisateurs_edit', {'id': utilisateur.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="12">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

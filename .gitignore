@@ -1,5 +1,7 @@
 
 ###> symfony/framework-bundle ###
+/composer.lock
+/.idea/dataSources.xml
 /.idea
 /.env
 /.env.local
