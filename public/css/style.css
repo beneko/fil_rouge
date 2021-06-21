@@ -1,9 +1,51 @@
+
 header {
-    background-color: red;
-    height: 200px;
+    background-color: #c70b0b !important;
 }
 
-footer {
-    background-color: #999999;
-    height: 180px;
+.submit {
+    display: inline-block;
+    transition: 0.2s ease;
+}
+
+.foot {
+    background-color: #313131;
+}
+
+
+.panier .compte {
+    border: #2f3640 ;
+    cursor: pointer;
+    transition: 0.6s;
+}
+.panier:hover {
+    border: 1px solid #999999 ;
+    background-color: #c70b0b ;
+}
+.compte:hover{
+    border: 1px solid #999999 ;
+    background-color: #c70b0b ;
+}
+
+
+.image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/*body{*/
+/*    min-height: 100vh !important;*/
+/*    display: grid !important;*/
+/*    grid-template-rows: auto 1fr auto !important;*/
+/*}*/
+
+
+
+/*results for search*/
+.results {
+    position: relative;
+    border-radius: 0px 0px 25px 25px ;
+    background-color: #FFFFFF;
+    direction: rtl;
 }
