@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Repository\UtilisateursRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Test\AssertingContextualValidatort;
 use Symfony\Component\Validator\Constraints\Regex;
+
 
 /**
  * @ORM\Table(name="Utilisateurs", indexes={@ORM\Index(name="nom_pays", columns={"nom_pays"})})
@@ -30,41 +32,92 @@ class Utilisateurs implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner ce champ"
+     * )
+     * @Assert\Regex(
+     *     pattern="//",
+     *     message="Caratère(s) non valide(s)"
+     * )
      */
+
     private $mot_de_passe;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner ce champ"
+     * )
+     * @Assert\Regex(
+     *     pattern="//",
+     *     message="Caratère(s) non valide(s)"
+     * )
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner ce champ"
+     * )
+     * @Assert\Regex(
+     *     pattern="//",
+     *     message="Caratère(s) non valide(s)"
+     * )
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner ce champ"
+     * )
+     * @Assert\Regex(
+     *     pattern="//",
+     *     message="Caratère(s) non valide(s)"
+     * )
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner ce champ"
+     * )
+     * @Assert\Regex(
+     *     pattern="//",
+     *     message="Caratère(s) non valide(s)"
+     * )
      */
     private $code_postal;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner ce champ"
+     * )
+     * @Assert\Regex(
+     *     pattern="//",
+     *     message="Caratère(s) non valide(s)"
+     * )
      */
     private $ville;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex(
+     *     pattern="//",
+     *     message="Caratère(s) non valide(s)"
+     * )
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *  @Assert\Regex(
+     *     pattern="//",
+     *     message="Caratère(s) non valide(s)"
+     * )
      */
     private $date_naissance;
 
@@ -73,6 +126,13 @@ class Utilisateurs implements UserInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_pays_id", referencedColumnName="id")
      * })
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner ce champ"
+     * )
+     *  @Assert\Regex(
+     *     pattern="//",
+     *     message="Caratère(s) non valide(s)"
+     * )
      */
     private $id_pays_id;
 
@@ -81,6 +141,11 @@ class Utilisateurs implements UserInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_role_id", referencedColumnName="id")
      * })
+     *  @Assert\Regex(
+     *     pattern="//",
+     *     message="Caratère(s) non valide(s)"
+     * )
+     *
      */
     private $id_role_id;
 
@@ -118,20 +183,18 @@ class Utilisateurs implements UserInterface
      */
     public function getRoles(): array
     {
-//        if ($this->getIdRoleId() == "2"){
-//            $roles = ["ROLE_ADMIN"];
-//        } elseif ($this->getIdRoleId() == "3"){
-//            $roles = ["ROLE_USER"];
-//        } else{
-//            $roles = ["ROLE_USER"];
-//        }
-//        return $roles;
+        if ($this->getIdRoleId() == "2") {
+            return ["ROLE_ADMIN"];
+        } elseif ($this->getIdRoleId() == "1") {
+            return ["ROLE_USER"];
+        } else {
+            return ["ROLE_USER"];
+        }
     }
 
     public function setRoles(): array
     {
-
-//        return [$this->setIdRoleId($this->id_role_id)];
+        return [$this->setIdRoleId($this->id_role_id)];
     }
 
     public function getIdRoleId(): ?roles
@@ -190,7 +253,7 @@ class Utilisateurs implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-         $this->mot_de_passe = null;
+        $this->mot_de_passe = null;
     }
 
     public function getNom(): ?string
