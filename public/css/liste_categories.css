@@ -24,7 +24,7 @@ img#pictures{
 }
 
 div.card{
-height: 100%!important;
+    height: 100%!important;
 }
 /*.card {*/
 /*    width: 22rem;*/
@@ -38,6 +38,6 @@ height: 100%!important;
     height:auto;
 }
 
-span{
-    padding-left: 30px;
+.card-footer{
+    text-align: center;
 }
