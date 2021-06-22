@@ -3,6 +3,7 @@
 /composer.lock
 /.idea/dataSources.xml
 /.idea/
+/.idea
 /.env
 /.env.local
 /.env.local.php
