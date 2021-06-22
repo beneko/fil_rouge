@@ -5,22 +5,53 @@ namespace App\Service\Panier;
 
 
 use App\Repository\ProduitsRepository;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class PanierService
+
+/**
+ * Class PanierService
+ * @package App\Service\Panier
+ */
+class PanierService extends AbstractType
 {
 
+    /**
+     * @var SessionInterface
+     */
     protected $session;
+
+    /**
+     * @var ProduitsRepository
+     */
     protected $produitRpository;
 
-    public function __construct(SessionInterface $session, ProduitsRepository $produitsRepository)
+    /**
+     * @var RequestStack
+     */
+    protected $request;
+
+
+    /**
+     * PanierService constructor.
+     * @param SessionInterface $session
+     * @param ProduitsRepository $produitsRepository
+     * @param Request $request
+     */
+    public function __construct(SessionInterface $session, ProduitsRepository $produitsRepository, RequestStack $requestStack)
     {
         $this->session = $session;
         $this->produitRpository = $produitsRepository;
+        $this->request=$requestStack;
 
     }
 
 
+    /**
+     * @param int $id
+     */
     public function add(int $id)
     {
 
@@ -38,6 +69,9 @@ class PanierService
 
     }
 
+    /**
+     * @param int $id
+     */
     public function remove(int $id)
     {
 
@@ -49,10 +83,14 @@ class PanierService
 
     }
 
+    /**
+     * @return array
+     */
     public function getFullPanier(): array
     {
         $panier = $this->session->get('panier', []);
         $panierAvecDonnee = [];
+
         foreach ($panier as $id => $quantite) {
             $panierAvecDonnee[] = [
                 'produit' => $this->produitRpository->find($id),
@@ -63,6 +101,9 @@ class PanierService
     }
 
 
+    /**
+     * @return float
+     */
     public function getTotal(): float
     {
         $total = 0;
@@ -72,4 +113,43 @@ class PanierService
         }
         return $total;
     }
+
+
+    public function removeOne(int $id)
+    {
+        $panier = $this->session->get('panier', []);
+
+        if (!empty($panier[$id])) {
+            $panier[$id]--;
+        } else {
+            unset($panier[$id]);
+        }
+
+        $this->session->set('panier', $panier);
+
+    }
+
+
+    public function updateNumber($request)
+    {
+        $panier=$this->session->get('panier');
+        $tableau = $request->get('quantite');
+//        dd($tableau);
+        foreach ($tableau as $idp => $quantite) {
+            if(!empty($tableau[$idp])){
+                $panier[$idp]=$quantite;
+            }
+
+        }
+
+//        dd($panier);
+        $this->session->set('panier',$panier);
+    }
+
+    public function supprimerPanier()
+    {
+        $this->session->set('panier',[]);
+    }
+
+
 }

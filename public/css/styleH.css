@@ -8,10 +8,23 @@ body{
    grid-template-rows: auto 1fr auto !important;
 }
 
+.card-header{
+   display: flex;
+   align-items: center !important;
+   flex-wrap: wrap;
+}
 
 
+div.card-header {
+   min-height: 300px;
+   width: auto;
+}
 
-/*<<<<<<< HEAD=======*/
+div.card {
+   min-height: 500px;
+}
+
+
 td{
    font-size: 18px;
 }
@@ -20,4 +33,4 @@ th{
    font-size: 18px;
    color: cornflowerblue;
 }
-/*>>>>>>> eccaa86dfada1727d9867b5e332fb3d38d58a7f1*/
+

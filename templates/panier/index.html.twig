@@ -1,38 +1,56 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ dump(objets) }}
+    {# {{ dump(objets) }} #}
     {% if  objets | length > 0 %}
-<table class="table">
-    <thead>
-    <tr>
-        <th>Produit</th>
-        <th>Prix unitaire</th>
-        <th>Quantite</th>
-        <th>total</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    {%  for objet in objets %}
-    <tr>
-        <td>{{ objet.produit.nomProduit }}</td>
-        <td>{{ objet.produit.prixProduit }} €</td>
-        <td>{{ objet.quantite }}</td>
-        <td>{{ objet.produit.prixProduit*objet.quantite }} €</td>
-        <td ><a href="{{ path('panier_remove', {'id': objet.produit.id}) }}" class="text-danger"><i class="far fa-trash-alt"></i></a></td>
-    </tr>
-    {% endfor %}
-    </tbody>
-    <tfoot>
-    <tr>
-        <td colspan="3" class="text-end">Total :</td>
-        <td>{{ total }} €</td>
-    </tr>
-    </tfoot>
-</table>
+        <form method="post" class="form-group">
+            <div class="d-flex justify-content-end">
+            <input type="submit" class="btn btn-info me-2" value="actualiser votre panier"></div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix unitaire</th>
+                    <th>Quantite</th>
+                    <th>total</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for objet in objets %}
+                    <tr>
+                        <td>{{ objet.produit.nomProduit }}</td>
+                        <td>{{ objet.produit.prixProduit }} €</td>
+                        <td class="d-flex flex-row">
+                            <input type="number" name="quantite[{{ objet.produit.id }}]" value="{{ objet.quantite }}"
+                                   class="col-2">
+                        </td>
+                        <td>{{ objet.produit.prixProduit*objet.quantite }} €</td>
+                        <td><a href="{{ path('panier_remove', {'id': objet.produit.id}) }}" class="text-danger"><i
+                                        class="far fa-trash-alt"></i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="3" class="text-end">Total :</td>
+                    <td>{{ total }} €</td>
+                </tr>
+                </tfoot>
+            </table>
+            <div class="d-flex justify-content-end">
+                <div class="d-flex flex-column">
+                    <a href="" class="btn btn-success float-end mb-1">Valider la Commande</a>
+                    <a href="{{ path('panier_remove_all') }}" class="btn btn-danger mb-1 mt-1"> Vider le panier</a>
+                    <a href="{{ path('produits_index') }}" class="btn btn-primary mt-1">Continuer les achats</a>
+                </div>
+            </div>
+
+        </form>
     {% else %}
-        <h2>vide</h2>
+        <h2>Votre panier est actuellement vide.</h2>
+        <a href="{{ path('produits_index') }}" class="btn btn-primary mt-1">Faire des achats!</a>
+
     {% endif %}
     <script src="https://kit.fontawesome.com/066785f9e9.js" crossorigin="anonymous"></script>
 {% endblock %}
