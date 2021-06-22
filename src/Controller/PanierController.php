@@ -6,7 +6,9 @@ namespace App\Controller;
 
 use App\Service\Panier\PanierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -17,11 +19,18 @@ class PanierController extends AbstractController
 {
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param PanierService $panierService
+     * @return Response
      * @Route("/panier", name="panier_index")
      */
-    public function index(PanierService $panierService)
+    public function index(Request $request, PanierService $panierService)
     {
+
+
+        if ($request->getMethod() === "POST") {
+            $panierService->updateNumber($request);
+            return $this->redirectToRoute("panier_index");
+        }
 //        dd($panierAvecDonnee);
         return $this->render('panier/index.html.twig', [
             'objets' => $panierService->getFullPanier(),
@@ -30,6 +39,9 @@ class PanierController extends AbstractController
     }
 
     /**
+     * @param $id
+     * @param PanierService $panierService
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Route("/panier/ajouter/{id}", name="panier_add")
      */
     public function add($id, PanierService $panierService)
@@ -38,18 +50,45 @@ class PanierController extends AbstractController
 
 
         return $this->redirectToRoute("panier_index");
-//        dd($session->get('panier'));
+
 
     }
 
-
     /**
+     * @param $id
+     * @param PanierService $panierService
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Route("/panier/remove/{id}", name="panier_remove")
      */
     public function remove($id, PanierService $panierService)
     {
 
         $panierService->remove($id);
+        return $this->redirectToRoute("panier_index");
+    }
+
+
+//    /**
+//     * @param $id
+//     * @param PanierService $panierService
+//     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+//     * @Route("/panier/removeUn/{id}", name="panier_remove_un")
+//     */
+//    public function removeUn($id, PanierService $panierService): Response
+//    {
+//        $panierService->removeOne($id);
+//        return $this->redirectToRoute("panier_index");
+//
+//    }
+
+    /**
+     * @param PanierService $panierService
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/panier/removeAll", name="panier_remove_all")
+     */
+    public function removeAll(PanierService $panierService)
+    {
+        $panierService->supprimerPanier();
         return $this->redirectToRoute("panier_index");
     }
 
