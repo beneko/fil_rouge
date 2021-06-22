@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Controller;
-
 
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
