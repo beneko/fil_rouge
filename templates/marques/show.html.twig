@@ -8,19 +8,19 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>IdMarque</th>
-                <td>{{ marque.idMarque }}</td>
+                <th>Id</th>
+                <td>{{ marque.id }}</td>
             </tr>
             <tr>
-                <th>NomMarque</th>
+                <th>Nom_marque</th>
                 <td>{{ marque.nomMarque }}</td>
             </tr>
             <tr>
-                <th>LibelleMarque</th>
+                <th>Libelle_marque</th>
                 <td>{{ marque.libelleMarque }}</td>
             </tr>
             <tr>
-                <th>LogoMarque</th>
+                <th>Logo_marque</th>
                 <td>{{ marque.logoMarque }}</td>
             </tr>
         </tbody>
@@ -28,7 +28,7 @@
 
     <a href="{{ path('marques_index') }}">back to list</a>
 
-    <a href="{{ path('marques_edit', {'idMarque': marque.idMarque}) }}">edit</a>
+    <a href="{{ path('marques_edit', {'id': marque.id}) }}">edit</a>
 
     {{ include('marques/_delete_form.html.twig') }}
 {% endblock %}

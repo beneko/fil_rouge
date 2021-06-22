@@ -1,39 +1,36 @@
+{% block stylesheets %}
+    {#{{ encore_entry_link_tags('app') }}#}
+    <link href="{{ asset('css/styleH.css')}}" rel="stylesheet">
+{% endblock %}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Marques index{% endblock %}
+{% block title %}Liste Marques{% endblock %}
 
 {% block body %}
-    <h1>Marques index</h1>
+    <h1>Liste des marques</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>IdMarque</th>
-                <th>NomMarque</th>
-                <th>LibelleMarque</th>
-                <th>LogoMarque</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class=" row">
         {% for marque in marques %}
-            <tr>
-                <td>{{ marque.idMarque }}</td>
-                <td>{{ marque.nomMarque }}</td>
-                <td>{{ marque.libelleMarque }}</td>
-                <td>{{ marque.logoMarque }}</td>
-                <td>
-                    <a href="{{ path('marques_show', {'idMarque': marque.idMarque}) }}">show</a>
-                    <a href="{{ path('marques_edit', {'idMarque': marque.idMarque}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="col-xl-3 square col-sm-6 mb-2">
+                <div class="card mb-3 rounded-pill ">
+                    <div class="card-header rounded-pill bg-white">
 
-    <a href="{{ path('marques_new') }}">Create new</a>
+                        <img src="{{asset('/images/')~marque.logoMarque}}" href="#" class="img-fluid rounded-pill " id="pictures" alt="Logo Marques">
+                        </div>
+
+                    <div class="card-body rounded-pill text-center">
+                        <p class="display-6 card-title"><b>{{ marque.nomMarque }}</b> </p>
+                        <h5 class="card-text ">{{ marque.libelleMarque }}</h5>
+                                            </div>
+                </div>
+            </div>
+        {% else %}
+            <div>
+                <p colspan="8">no product found</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('marques_new') }}" class="btn btn-info">Ajouter une Marque</a>
 {% endblock %}
