@@ -27,8 +27,6 @@ class UtilisateursController extends AbstractController
 
     /**
      * @Route("/new", name="utilisateurs_new", methods={"GET","POST"})
-     *  @param Request $request
-     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -40,11 +38,6 @@ class UtilisateursController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($utilisateur);
             $entityManager->flush();
-
-            $this->addFlash(
-                'success',
-                'l\'utilisateur ajouté avec succès !!'
-            );
 
             return $this->redirectToRoute('utilisateurs_index');
         }

@@ -13,14 +13,10 @@ class UtilisateursType extends AbstractType
     {
         $builder
             ->add('mail')
-            ->add('mot_de_passe')
+            ->add('roles')
+            ->add('password')
             ->add('nom')
             ->add('prenom')
-            ->add('telephone')
-            ->add('code_postal')
-            ->add('ville')
-            ->add('adresse')
-            ->add('id_pays_id')
         ;
     }
 

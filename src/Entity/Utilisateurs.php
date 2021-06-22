@@ -5,14 +5,8 @@ namespace App\Entity;
 use App\Repository\UtilisateursRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Test\AssertingContextualValidatort;
-use Symfony\Component\Validator\Constraints\Regex;
-
 
 /**
- * @ORM\Table(name="Utilisateurs", indexes={@ORM\Index(name="nom_pays", columns={"nom_pays"})})
- * * @ORM\Table(name="Utilisateurs", indexes={@ORM\Index(name="nom_role", columns={"nom_role"})})
  * @ORM\Entity(repositoryClass=UtilisateursRepository::class)
  */
 class Utilisateurs implements UserInterface
@@ -30,124 +24,25 @@ class Utilisateurs implements UserInterface
     private $mail;
 
     /**
-     * @var string The hashed password
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(
-     *     message="Veuillez renseigner ce champ"
-     * )
-     * @Assert\Regex(
-     *     pattern="//",
-     *     message="Caratère(s) non valide(s)"
-     * )
+     * @ORM\Column(type="json")
      */
+    private $roles = [];
 
-    private $mot_de_passe;
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(
-     *     message="Veuillez renseigner ce champ"
-     * )
-     * @Assert\Regex(
-     *     pattern="//",
-     *     message="Caratère(s) non valide(s)"
-     * )
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(
-     *     message="Veuillez renseigner ce champ"
-     * )
-     * @Assert\Regex(
-     *     pattern="//",
-     *     message="Caratère(s) non valide(s)"
-     * )
      */
     private $prenom;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(
-     *     message="Veuillez renseigner ce champ"
-     * )
-     * @Assert\Regex(
-     *     pattern="//",
-     *     message="Caratère(s) non valide(s)"
-     * )
-     */
-    private $telephone;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(
-     *     message="Veuillez renseigner ce champ"
-     * )
-     * @Assert\Regex(
-     *     pattern="//",
-     *     message="Caratère(s) non valide(s)"
-     * )
-     */
-    private $code_postal;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(
-     *     message="Veuillez renseigner ce champ"
-     * )
-     * @Assert\Regex(
-     *     pattern="//",
-     *     message="Caratère(s) non valide(s)"
-     * )
-     */
-    private $ville;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Regex(
-     *     pattern="//",
-     *     message="Caratère(s) non valide(s)"
-     * )
-     */
-    private $adresse;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     *  @Assert\Regex(
-     *     pattern="//",
-     *     message="Caratère(s) non valide(s)"
-     * )
-     */
-    private $date_naissance;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Pays")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_pays_id", referencedColumnName="id")
-     * })
-     * @Assert\NotBlank(
-     *     message="Veuillez renseigner ce champ"
-     * )
-     *  @Assert\Regex(
-     *     pattern="//",
-     *     message="Caratère(s) non valide(s)"
-     * )
-     */
-    private $id_pays_id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Roles")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_role_id", referencedColumnName="id")
-     * })
-     *  @Assert\Regex(
-     *     pattern="//",
-     *     message="Caratère(s) non valide(s)"
-     * )
-     *
-     */
-    private $id_role_id;
 
     public function getId(): ?int
     {
@@ -155,8 +50,6 @@ class Utilisateurs implements UserInterface
     }
 
     public function getMail(): ?string
-
-
     {
         return $this->mail;
     }
@@ -175,7 +68,7 @@ class Utilisateurs implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string)$this->mail;
+        return (string) $this->mail;
     }
 
     /**
@@ -183,29 +76,16 @@ class Utilisateurs implements UserInterface
      */
     public function getRoles(): array
     {
-        if ($this->getIdRoleId() == "2") {
-            return ["ROLE_ADMIN"];
-        } elseif ($this->getIdRoleId() == "1") {
-            return ["ROLE_USER"];
-        } else {
-            return ["ROLE_USER"];
-        }
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function setRoles(): array
+    public function setRoles(array $roles): self
     {
-        return [$this->setIdRoleId($this->id_role_id)];
-    }
-
-    public function getIdRoleId(): ?roles
-    {
-        return $this->id_role_id;
-
-    }
-
-    public function setIdRoleId(?roles $id_role_id): int
-    {
-        $this->id_role_id = $id_role_id;
+        $this->roles = $roles;
 
         return $this;
     }
@@ -213,24 +93,14 @@ class Utilisateurs implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
-        return $this->getMotDePasse();
+        return $this->password;
     }
 
-    public function setPassword(string $mot_de_passe): self
+    public function setPassword(string $password): self
     {
-        return $this->setMotDePasse();
-    }
-
-    public function getMotDePasse(): ?string
-    {
-        return $this->mot_de_passe;
-    }
-
-    public function setMotDePasse(string $mot_de_passe): self
-    {
-        $this->mot_de_passe = $mot_de_passe;
+        $this->password = $password;
 
         return $this;
     }
@@ -253,7 +123,6 @@ class Utilisateurs implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-        $this->mot_de_passe = null;
     }
 
     public function getNom(): ?string
@@ -277,83 +146,6 @@ class Utilisateurs implements UserInterface
     {
         $this->prenom = $prenom;
 
-        return $this;
-    }
-
-    public function getTelephone(): ?string
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone(string $telephone): self
-    {
-        $this->telephone = $telephone;
-
-        return $this;
-    }
-
-    public function getCodePostal(): ?string
-    {
-        return $this->code_postal;
-    }
-
-    public function setCodePostal(string $code_postal): self
-    {
-        $this->code_postal = $code_postal;
-
-        return $this;
-    }
-
-    public function getVille(): ?string
-    {
-        return $this->ville;
-    }
-
-    public function setVille(string $ville): self
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
-
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(?string $adresse): self
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    public function getDateNaissance(): ?\DateTimeInterface
-    {
-        return $this->date_naissance;
-    }
-
-    public function setDateNaissance(?\DateTimeInterface $date_naissance): self
-    {
-        $this->date_naissance = $date_naissance;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIdPaysId()
-    {
-        return $this->id_pays_id;
-    }
-
-    /**
-     * @param mixed $id_pays
-     */
-    public function setIdPaysId($id_pays): self
-    {
-        $this->id_pays_id = $id_pays;
         return $this;
     }
 }

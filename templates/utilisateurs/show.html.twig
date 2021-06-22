@@ -16,8 +16,12 @@
                 <td>{{ utilisateur.mail }}</td>
             </tr>
             <tr>
-                <th>Mot_de_pass</th>
-                <td>{{ utilisateur.motDePasse }}</td>
+                <th>Roles</th>
+                <td>{{ utilisateur.roles ? utilisateur.roles|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ utilisateur.password }}</td>
             </tr>
             <tr>
                 <th>Nom</th>
@@ -26,34 +30,6 @@
             <tr>
                 <th>Prenom</th>
                 <td>{{ utilisateur.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Telephone</th>
-                <td>{{ utilisateur.telephone }}</td>
-            </tr>
-            <tr>
-                <th>Code_postal</th>
-                <td>{{ utilisateur.codePostal }}</td>
-            </tr>
-            <tr>
-                <th>Ville</th>
-                <td>{{ utilisateur.ville }}</td>
-            </tr>
-            <tr>
-                <th>Adresse</th>
-                <td>{{ utilisateur.adresse }}</td>
-            </tr>
-            <tr>
-                <th>Date_naissance</th>
-                <td>{{ utilisateur.dateNaissance ? utilisateur.dateNaissance|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Id_role_id</th>
-                <td>{{ utilisateur.idRoleId ? utilisateur.idRoleId : '' }}</td>
-            </tr>
-            <tr>
-                <th>Id_pays_id</th>
-                <td>{{ utilisateur.idPaysId ? utilisateur.idPaysId : '' }}</td>
             </tr>
         </tbody>
     </table>
