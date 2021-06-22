@@ -1,0 +1,43 @@
+/* ---------------- GENERAL ---------------- */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #e0e0e0;
+}
+
+/* ---------------- INDEX ---------------- */
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+img#pictures{
+    height: 12rem!important;
+}
+
+
+@media (min-width: 330px) and (max-width: 1199.98px) {
+    .row{ justify-content: center;}
+
+}
+
+div.card{
+    height: 100%!important;
+}
+/*.card {*/
+/*    width: 22rem;*/
+/*    border-width: 3px;*/
+/*}*/
+
+
+
+.card-img-top, .img-fluid {
+    width:auto;
+    height:auto;
+}
+
+.card-footer{
+    text-align: center;
+}
