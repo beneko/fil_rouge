@@ -13,7 +13,7 @@
     <div class=" row">
         {% for marque in marques %}
             <div class="col-xl-3 square col-sm-6 mb-2">
-                <div class="card mb-3 rounded-pill bg-secondary">
+                <div class="card mb-3 rounded-pill ">
                     <div class="card-header rounded-pill bg-white">
 
                         <img src="{{asset('/images/')~marque.logoMarque}}" href="#" class="img-fluid rounded-pill " id="pictures" alt="Logo Marques">
@@ -22,8 +22,7 @@
                     <div class="card-body rounded-pill text-center">
                         <p class="display-6 card-title"><b>{{ marque.nomMarque }}</b> </p>
                         <h5 class="card-text ">{{ marque.libelleMarque }}</h5>
-                        <a href="#" class="card-link text-warning">lien</a>
-                    </div>
+                                            </div>
                 </div>
             </div>
         {% else %}
