@@ -12,16 +12,23 @@ body{
    display: flex;
    align-items: center !important;
    flex-wrap: wrap;
+   justify-content: center;
 }
 
 
-div.card-header {
+.card-header {
    min-height: 300px;
    width: auto;
 }
 
-div.card {
+.card{
    min-height: 500px;
+}
+
+.card:hover
+{
+   background-color: #efefef;
+   color: red;
 }
 
 
