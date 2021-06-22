@@ -16,12 +16,12 @@
                             <img src="{{asset('/images/')~produit.image}}" class="img-fluid card-img-top " id="pictures" alt="Photo smartphone">
                         </div>
                         <div class="card-body">
-                            <p class="display-6 card-title"><b>{{ produit.nomProduit }}</b> </p>
+                            <p class="display-6 card-title"><b>{{ produit.nomProduit }}</b></p>
                             <h5 class=" card-text">{{ produit.libelleProduit }}</h5>
-                            <div class="d-flex justify-content-between align-item-center">
-                                <a href="#" class="btn btn-dark  btn-block">Voir plus</a>
-                                <span class="h4 mt-auto">{{ produit.prixProduit }} €</span>
-                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{ path('produits_show', {'id': produit.id}) }}" class="btn btn-dark  btn-block">Voir plus</a>
+                            <span class="h4 mt-auto ">{{ produit.prixProduit }} €</span>
                         </div>
                     </div>
                 </div>

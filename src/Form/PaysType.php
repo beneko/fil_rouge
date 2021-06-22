@@ -2,32 +2,24 @@
 
 namespace App\Form;
 
-use App\Entity\Utilisateurs;
+use App\Entity\Pays;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UtilisateursType extends AbstractType
+class PaysType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('mail')
-            ->add('mot_de_passe')
-            ->add('nom')
-            ->add('prenom')
-            ->add('telephone')
-            ->add('code_postal')
-            ->add('ville')
-            ->add('adresse')
-            ->add('id_pays_id')
+            ->add('nom_pays')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Utilisateurs::class,
+            'data_class' => Pays::class,
         ]);
     }
 }

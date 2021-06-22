@@ -31,7 +31,7 @@ class UtilisateursRepository extends ServiceEntityRepository implements Password
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
 
-        $user->setPassword($newEncodedPassword);
+        $user->setMotDePasse($newEncodedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
     }
