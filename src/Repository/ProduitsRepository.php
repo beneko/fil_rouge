@@ -20,18 +20,20 @@ class ProduitsRepository extends ServiceEntityRepository
     }
 
 
-//    /**
-//     * @param $idcat
-//     * @return int|mixed|string
-//     */
-//    public function produitParCategorie($idcat)
-//    {
-//        $produit = new Produits();
-//        $requete = $this->_em->createQuery('SELECT nomProduit FROM App\Entity\Produits p WHERE p.categorie=:categorie');
-//        $requete->setParameter('categorie',$idcat);
-//        return $requete->getResult();
-//
-//    }
+    /**
+     * @param $idcat
+     * @return int|mixed|string
+     */
+    public function produitParCategorie($idcat)
+    {
+        // preparation requete
+        $requete = $this->_em->createQuery('SELECT p.nom_produit nomProduit, p.id id, p.libelle_produit libelleProduit, p.image image, p.prix_produit prixProduit FROM App\Entity\Produits p WHERE p.categorie=:categorie');
+        // equivalent du bindvalue qu'on utilisait en php poo
+        $requete->setParameter('categorie',$idcat);
+        // retourne les resultats de la requete
+        return $requete->getResult();
+
+    }
 
     // /**
     //  * @return Produits[] Returns an array of Produits objects
