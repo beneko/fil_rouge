@@ -19,6 +19,20 @@ class ProduitsRepository extends ServiceEntityRepository
         parent::__construct($registry, Produits::class);
     }
 
+
+//    /**
+//     * @param $idcat
+//     * @return int|mixed|string
+//     */
+//    public function produitParCategorie($idcat)
+//    {
+//        $produit = new Produits();
+//        $requete = $this->_em->createQuery('SELECT nomProduit FROM App\Entity\Produits p WHERE p.categorie=:categorie');
+//        $requete->setParameter('categorie',$idcat);
+//        return $requete->getResult();
+//
+//    }
+
     // /**
     //  * @return Produits[] Returns an array of Produits objects
     //  */
