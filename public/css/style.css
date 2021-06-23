@@ -15,17 +15,18 @@ header {
     background-color: #313131;
 }
 
-/*.panier .compte {*/
-/*    border: #2f3640 ;*/
-/*    cursor: pointer;*/
-/*    transition: 0.6s;*/
-/*}*/
-/*.panier:hover {*/
-/*    background-color: #c70b0b ;*/
-/*}*/
-/*.compte:hover{*/
-/*    background-color: #c70b0b ;*/
-/*}*/
+.panier , .compte {
+    border: #2f3640 ;
+    cursor: pointer;
+    transition: 0.6s;
+    background-color: #FFFFFF;
+}
+.panier:hover {
+    background-color: #c70b0b ;
+}
+.compte:hover{
+    background-color: #c70b0b ;
+}
 
 .image {
     max-width: 100%;
