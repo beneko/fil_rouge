@@ -1,4 +1,3 @@
-
 ###> symfony/framework-bundle ###
 /composer.lock
 /.idea/dataSources.xml
