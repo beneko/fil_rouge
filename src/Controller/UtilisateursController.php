@@ -104,4 +104,14 @@ class UtilisateursController extends AbstractController
 
         return $this->redirectToRoute('utilisateurs_index');
     }
+
+    /**
+     * @Route("/{id}/compte", name="utilisateurs_compte", methods={"GET"})
+     */
+    public function compte(Utilisateurs $utilisateur): Response
+    {
+        return $this->render('utilisateurs/compte.html.twig', [
+            'utilisateur' => $utilisateur
+        ]);
+    }
 }

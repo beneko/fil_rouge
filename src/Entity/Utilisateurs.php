@@ -105,7 +105,11 @@ class Utilisateurs implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
+
+        if ($this->roles == "admin")
+            $roles = ["ROLE_ADMIN"];
+        if ($this->roles == "client")
+            $roles = ["ROLE_USER"];
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
