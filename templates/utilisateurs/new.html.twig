@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Utilisateurs{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Create new Utilisateurs</h1>
-
-    {{ include('utilisateurs/_form.html.twig') }}
-
-    <a href="{{ path('utilisateurs_index') }}">back to list</a>
+    <div class="row justify-content-center border border-4 border-secondary rounded m-5">
+        <div class="col-12 col-md-8  p-5">
+            <h1>Inscription</h1>
+            {{ include('utilisateurs/_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}
