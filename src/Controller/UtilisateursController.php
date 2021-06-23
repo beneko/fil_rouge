@@ -49,7 +49,7 @@ class UtilisateursController extends AbstractController
             $entityManager->persist($utilisateur);
             $entityManager->flush();
 
-            return $this->redirectToRoute('utilisateurs_index');
+            return $this->redirectToRoute('utilisateurs_show');
         }
 
         return $this->render('utilisateurs/new.html.twig', [
@@ -82,7 +82,7 @@ class UtilisateursController extends AbstractController
             );
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('utilisateurs_index');
+            return $this->redirectToRoute('utilisateurs_show');
         }
 
         return $this->render('utilisateurs/edit.html.twig', [
