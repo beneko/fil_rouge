@@ -33,7 +33,7 @@ class PanierController extends AbstractController
         }
 //        dd($panierAvecDonnee);
         return $this->render('panier/index.html.twig', [
-            'objets' => $panierService->getFullPanier(),
+            'panier' => $panierService->getFullPanier(),
             'total' => $panierService->getTotal()
         ]);
     }

@@ -1,0 +1,32 @@
+INSERT INTO digitall.marques(id, nom_marque, libelle_marque, logo_marque) VALUES (1,'Apple','Eco-système de merde US','applelogo.jpg');
+INSERT INTO digitall.marques(id, nom_marque, libelle_marque, logo_marque) VALUES (2,'Hp','Materiel informatique US','hplogo.jpg');
+INSERT INTO digitall.marques(id, nom_marque, libelle_marque, logo_marque) VALUES (3,'Oppo','Matos a faible durée de vie','oppologo.jpg');
+INSERT INTO digitall.marques(id, nom_marque, libelle_marque, logo_marque) VALUES (4,'Samsung','comme apple mais en coréen','samsunglogo.jpg');
+INSERT INTO digitall.marques(id, nom_marque, libelle_marque, logo_marque) VALUES (5,'Xiaomi','Marques chinoise','xiaomi.jpg');
+INSERT INTO digitall.marques(id, nom_marque, libelle_marque, logo_marque) VALUES (6,'Oneplus','Marque chinoise 2','oneplus.jpg');
+
+
+
+INSERT INTO digitall.categories(id, id_cat_id, nom_cat, libelle_cat, image_cat) VALUES (1,null,'Laptop','ordi portables','laptop.jpg');
+INSERT INTO digitall.categories(id, id_cat_id, nom_cat, libelle_cat, image_cat) VALUES (2,null,'Desktop','Ordinateurs de bureaux','desktop.jpg');
+INSERT INTO digitall.categories(id, id_cat_id, nom_cat, libelle_cat, image_cat) VALUES (3,null,'Tablette','Tablette pro ou familiale','tablette.jpg');
+INSERT INTO digitall.categories(id, id_cat_id, nom_cat, libelle_cat, image_cat) VALUES (4,null,'Smartphone','Ordinateurs de poche qui ont une option téléphonie','smartphone.jpg');
+INSERT INTO digitall.categories(id, id_cat_id, nom_cat, libelle_cat, image_cat) VALUES (5,null,'Accessoires','Ecouteurs, chargeurs de téléphones, etc..','accessoire.jpg');
+INSERT INTO digitall.categories(id, id_cat_id, nom_cat, libelle_cat, image_cat) VALUES (6,2,'PC gamers','le nec plus ultra du gaming!','pc_gamer.jpg');
+INSERT INTO digitall.categories(id, id_cat_id, nom_cat, libelle_cat, image_cat) VALUES (7,2,'PC de bureautique','Idéal pour travailler vos fichiers word et excel','pc_bureautique.jpg');
+INSERT INTO digitall.categories(id, id_cat_id, nom_cat, libelle_cat, image_cat) VALUES (8,5,'écouteurs','écoutez votre musique partout ou vous vouler','ecouteurs.jpg');
+INSERT INTO digitall.categories(id, id_cat_id, nom_cat, libelle_cat, image_cat) VALUES (9,5,'coques','protégez votre ordinateur de poche','coques.jpg');
+
+
+
+
+
+INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (1,1,'iPhone 12 Pro','Nouvel Apple iPhone 12 pro 128 Go - bleu pacifique',1090.00,30,0.22,4,'iphone12.jpg');
+INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (2,1,'iPhone SE','Apple iPhone SE 64Go - Noir ',449.00,22,0.19,4,'iphoneSE.jpg');
+INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (3,5,'Samsung Galaxy A52','Samsung Galaxy A52 128Go - blanc',379.00,30,0.21,4,'SamsungA72.jpg');
+INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (4,5,'Samsung Galaxy A12','Smartphone Samsung 64Go Dual Sim Blue',185.00,15,0.17,4,'SamsungA12.jpg');
+INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (5,3,'OPPO A72','smartphone 4G 128Go, batterie 5000mAh - Noir Twilight',229.00,30,0.19,4,'OPPOA72.jpg');
+INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (6,6,'OnePlus 8T','Oneplus 8T 5G 128 Go 4500 mAh - SILVER',482.00,19,0.20,4,'OnePlus8T.jpg');
+INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (7,3,'Oppo Find X2','8G+256GB 5G Snapdragon 865 (Noir (Céramique)',685.00,230,0.21,4,'OppoFindX2.jpg');
+INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (8,5,'Xiaomi Mix X','Xiaomi Mix X  128 Go',1300.00,22,0.30,4,'XiaomiMixX.png');
+INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (9,1,'Apple airpods','écouteurs sans fil de la marque Airpods de chez Apple',229.00,22,0.04,8,'airpods.jpg');
