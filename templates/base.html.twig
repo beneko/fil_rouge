@@ -2,12 +2,11 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>{% block title %}Welcome!{% endblock %}</title>
-    {# Link font awsem Css #}
+
     {# Link Bootstrap Css #}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -32,18 +31,18 @@
 {# Nav header #}
 <header>
     <div class="container">
-        <div class="row p-5 justify-content-start align-items-center">
+        <div class="row p-3  align-items-center">
 
             {# Logo #}
-            <div class="col-md-6 col-12 align-self-start">
+            <div class="col-md-5 col-12 col-lg-6 justify-content-center justify-content-lg-start d-flex">
                 <a href="">
-                    <img src="{{ asset('images/Logo01.png') }}" alt="Digitall">
+                    <img src="{{ asset('images/Logo01.png') }}" class="img-fluid" alt="Digitall">
                 </a>
             </div>
             {# End Logo #}
 
                 {# search #}
-                <div class="col-md-4 col-12">
+                <div class="col-md-3 col-12 col-lg-4 justify-content-center justify-content-lg-center justify-content-xl-end d-flex">
                     <form action="{{ asset('server.php') }}" method="POST" class="d-flex  position-relative ml-3 my-3">
                         <input class="search form-control me-2 rounded-pill" type="search" name="searchVal"
                                placeholder="Search" aria-label="Search">
@@ -56,16 +55,15 @@
 
                 {# navbar button #}
                   {# Button Compt #}
-                <div class="col-md-1 col-6 mx-auto">
-                    <button type="submit" class="compte rounded-circle border border-4 border-dark p-3 m-2">
-                        <i class="fs-4 fa fa-user-plus"></i></button>
+                <div class="col-md-2 col-6 col-lg-1 justify-content-end justify-content-lg-end d-flex">
+                    <a href="" class="compte bg-light rounded-circle border border-4 border-dark p-3 m-2">
+                        <i class="iconi fs-4 fa fa-user-plus"></i></a>
                 </div>
                   {# Button Panier #}
-                <div class="col-md-1 col-6">
-                    <button type="submit" class="panier rounded-circle border border-4 border-dark p-3  m-2">
-                        <i class="fs-4 fas fa-shopping-cart"></i></button>
+                <div class="col-md-2 col-6 col-lg-1 justify-content-start justify-content-lg-end d-flex">
+                    <a href="" class="panier bg-light rounded-circle border border-4 border-dark p-3  m-2">
+                        <i class="iconi fs-4 fas fa-shopping-cart"></i></a>
                 </div>
-
         </div>
         {# End navbar button #}
 
