@@ -37,7 +37,13 @@ div.card{
     width:auto;
     height:auto;
 }
-
+/*.card-body{*/
+/*    background-color: #c70b0b !important;*/
+/*}*/
 .card-footer{
+    text-align: center;
+}
+
+p{
     text-align: center;
 }
