@@ -79,4 +79,20 @@ class Marques
     }
 
 
+    private $img;
+
+
+    public function getImg()
+    {
+        return $this->img;
+    }
+
+    /**
+     * @param mixed $img
+     */
+    public function setImg($img)
+    {
+        $this->img = $img;
+        return $img;
+    }
 }
