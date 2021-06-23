@@ -9,12 +9,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/utilisateurs")
  */
 class UtilisateursController extends AbstractController
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
     /**
      * @Route("/", name="utilisateurs_index", methods={"GET"})
      */
@@ -35,6 +42,9 @@ class UtilisateursController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $utilisateur->setPassword(
+                $this->passwordEncoder->encodePassword( $utilisateur, $utilisateur->getPassword() )
+            );
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($utilisateur);
             $entityManager->flush();
@@ -67,6 +77,9 @@ class UtilisateursController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $utilisateur->setPassword(
+                $this->passwordEncoder->encodePassword( $utilisateur, $utilisateur->getPassword() )
+            );
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('utilisateurs_index');
