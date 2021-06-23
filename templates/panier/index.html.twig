@@ -2,7 +2,7 @@
 
 {% block body %}
     {# {{ dump(objets) }} #}
-    {% if  objets | length > 0 %}
+    {% if  panier | length > 0 %}
         <form method="post" class="form-group">
             <div class="d-flex justify-content-end">
             <input type="submit" class="btn btn-info me-2" value="actualiser votre panier"></div>
@@ -17,16 +17,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for objet in objets %}
+                {% for objets in panier %}
                     <tr>
-                        <td>{{ objet.produit.nomProduit }}</td>
-                        <td>{{ objet.produit.prixProduit }} €</td>
+                        <td>{{ objets.produit.nomProduit }}</td>
+                        <td>{{ objets.produit.prixProduit }} €</td>
                         <td class="d-flex flex-row">
-                            <input type="number" name="quantite[{{ objet.produit.id }}]" value="{{ objet.quantite }}"
+                            <input type="number" name="quantite[{{ objets.produit.id }}]" value="{{ objets.quantite }}"
                                    class="col-2">
                         </td>
-                        <td>{{ objet.produit.prixProduit*objet.quantite }} €</td>
-                        <td><a href="{{ path('panier_remove', {'id': objet.produit.id}) }}" class="text-danger"><i
+                        <td>{{ objets.produit.prixProduit*objets.quantite }} €</td>
+                        <td><a href="{{ path('panier_remove', {'id': objets.produit.id}) }}" class="text-danger"><i
                                         class="far fa-trash-alt"></i></a></td>
                     </tr>
                 {% endfor %}
@@ -40,6 +40,7 @@
             </table>
             <div class="d-flex justify-content-end">
                 <div class="d-flex flex-column">
+{#                    ajouter ici un if avec la session : si l'utilisateur est connecté, validation commande, sinon page connexion/inscription#}
                     <a href="" class="btn btn-success float-end mb-1">Valider la Commande</a>
                     <a href="{{ path('panier_remove_all') }}" class="btn btn-danger mb-1 mt-1"> Vider le panier</a>
                     <a href="{{ path('produits_index') }}" class="btn btn-primary mt-1">Continuer les achats</a>
