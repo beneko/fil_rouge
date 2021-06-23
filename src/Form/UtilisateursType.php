@@ -19,11 +19,15 @@ class UtilisateursType extends AbstractType
         $builder
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
-            ->add('mail', EmailType::class)
+            ->add('mail', RepeatedType::class,array(
+                'type' => EmailType::class,
+                'first_options'  => array('label' => 'Adresse mail'),
+                'second_options' => array('label' => 'Confirmation Adresse mail'),
+            ))
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Mot de passe'),
-                'second_options' => array('label' => 'Confirme mot de passe'),
+                'second_options' => array('label' => 'Confirmation mot de passe'),
             ))
         ;
     }
