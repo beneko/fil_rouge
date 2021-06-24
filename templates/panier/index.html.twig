@@ -11,7 +11,7 @@
     {% if  panier | length > 0 %}
         <form method="post" class="form-group">
             <div class="d-flex justify-content-end">
-                <input type="submit" class="btn btn-info me-2" value="actualiser votre panier"></div>
+                <input type="submit" class="btn btn-info me-2" value="Actualiser votre panier"></div>
             <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -19,6 +19,7 @@
                     <th>Produit</th>
                     <th>Nom</th>
                     <th>Description</th>
+                    <th>Disponibilité</th>
                     <th>Quantite</th>
                     <th>Prix</th>
                     <th>Supprimer</th>
@@ -28,14 +29,15 @@
                 <tbody>
                 {% for objets in panier %}
                     <tr>
-                        <div >
-                            <td><img src="{{asset('/images/')~objets.produit.image}}" class="pics img-fluid" id="pictures" alt="Photo smartphone"></td>
-                        </div>
+                        <td><img src="{{asset('/images/')~objets.produit.image}}" class="pics img-fluid" id="pictures" alt="Photo smartphone"></td>
                         <td><b>{{ objets.produit.nomProduit }}</b></td>
                         <td>{{ objets.produit.libelleProduit }}</td>
-                        <td class="tasksInput d-flex flex-row">
-                                <input type="number" name="quantite[{{ objets.produit.id }}]" value="{{ objets.quantite }}" >
+                        <td>En stock le..</td>
+                        <div class="d-flex align-items-end">
+                        <td class="tasksInput">
+                             <input type="number" class="border border-secondary" name="quantite[{{ objets.produit.id }}]" value="{{ objets.quantite }}" >
                         </td>
+                        </div>
                         <td>{{ objets.produit.prixProduit*objets.quantite }}€</td>
                         <td><a href="{{ path('panier_remove', {'id': objets.produit.id}) }}" class="text-danger"><i
                                         class="far fa-trash-alt"></i></a></td>
