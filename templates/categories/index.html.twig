@@ -19,7 +19,7 @@
                         <h5 class=" card-text">{{ category.libelleCat }}</h5>
                     </div>
                     <div class="card-footer bg-dark">
-                        <a href="{{ path('categories_show', {'id': category.id}) }}" class="btn btn-dark  btn-block">Voir toutes les offres</a>
+                        <a href="{{ path('produits_cat', {'idcat' : category.id}) }}" class="btn btn-dark  btn-block">Voir toutes les offres</a>
                     </div>
                 </div>
             </div>

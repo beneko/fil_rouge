@@ -1,4 +1,4 @@
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
         <div class="mb-3">
             {{ form_row(form.nom) }}
@@ -14,7 +14,7 @@
         </div>
         <div class="d-grid gap-2 d-sm-block">
             <button class="btn btn-danger">{{ button_label|default('Inscrption') }}</button>
-            <a class="btn btn-secondary" href="{{ path('utilisateurs_index') }}">Retour</a>
+            <a class="btn btn-secondary" href="{{ path('home') }}">Retour</a>
         </div>
 
 {{ form_end(form) }}

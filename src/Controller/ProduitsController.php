@@ -91,4 +91,24 @@ class ProduitsController extends AbstractController
 
         return $this->redirectToRoute('produits_index');
     }
+
+    /**
+     * @Route("/test/{idcat}", name="produits_cat", methods={"GET"})
+     */
+    public function indexParCategorie(ProduitsRepository $produitsRepository, $idcat): Response
+    {
+
+        // appelle la fonction qui liste les produits par categorie se trouvant dans le produitrepository
+        $produits = $produitsRepository->produitParCategorie($idcat);
+
+        // retourne les resultats sur la page index (deja faite) mais cette fois avec les produits de telle caterogie
+        return $this->render('produits/index.html.twig', [
+            'produits' => $produits,
+        ]);
+    }
+
+
+
+
+
 }

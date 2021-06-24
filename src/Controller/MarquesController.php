@@ -35,10 +35,22 @@ class MarquesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $img = $form->get('picture')->getData();
+
+
+//            if($imgFile) {
+//                $originalFichier = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
+//                $ok_nom_fichier = transliterator_transliterate('')
+//            }
+
+
+
+
+
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($marque);
             $entityManager->flush();
-
             return $this->redirectToRoute('marques_index');
         }
 

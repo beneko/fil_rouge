@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 
 /**
@@ -91,6 +92,32 @@ class PanierController extends AbstractController
         $panierService->supprimerPanier();
         return $this->redirectToRoute("panier_index");
     }
+
+
+    /**
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
+     * @Route("/panier/test" , name="testpanier")
+     */
+    public function validationPanier(AuthenticationUtils $authenticationUtils)
+    {
+        $verif=false;
+        if($this->getUser()){
+            $verif=true;
+            return $this->render('home/index.html.twig',[
+                'verif'=>$verif
+            ]);
+        }
+        else{
+            return $this->render('home/index.html.twig',[
+                'verif'=>$verif,
+            ]);
+        }
+
+
+    }
+
+
 
 
 }
