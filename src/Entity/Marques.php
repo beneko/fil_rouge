@@ -37,7 +37,7 @@ class Marques
         return $this->id;
     }
 
-    public function getNomMarque(): ?string
+    public function getNomMarque()
     {
         return $this->nom_marque;
     }
@@ -79,20 +79,4 @@ class Marques
     }
 
 
-    private $img;
-
-
-    public function getImg()
-    {
-        return $this->img;
-    }
-
-    /**
-     * @param mixed $img
-     */
-    public function setImg($img)
-    {
-        $this->img = $img;
-        return $img;
-    }
 }

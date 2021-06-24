@@ -1,4 +1,6 @@
 {{ form_start(form) }}
+    {{ form_widget(form.nom_marque) }}
+    {{ form_widget(form.libelle_marque) }}
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
