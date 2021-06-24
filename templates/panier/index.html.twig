@@ -11,32 +11,31 @@
         <form method="post" class="form-group">
             <div class="d-flex justify-content-end">
                 <input type="submit" class="btn btn-info me-2" value="actualiser votre panier"></div>
+            <div class="table-responsive">
             <table class="table">
                 <thead>
                 <tr>
                     <th>Produit</th>
                     <th>Nom</th>
-                    {#                    <th>Description</th>#}
-                    <th>Prix unitaire</th>
+                    <th>Description</th>
                     <th>Quantite</th>
-                    <th>total</th>
-                    <th></th>
+                    <th>Prix</th>
+                    <th>Supprimer</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 {% for objets in panier %}
                     <tr>
-                        <td><img src="{{asset('/images/')~objets.produit.image}}" class="img-fluid" id="pictures" alt="Photo smartphone"></td>
-                        <td>
-                            {{ objets.produit.nomProduit }}
-                            <br>
-                            {{ objets.produit.libelleProduit }}
+                        <div >
+                            <td><img src="{{asset('/images/')~objets.produit.image}}" class="pics img-fluid" id="pictures" alt="Photo smartphone"></td>
+                        </div>
+                        <td><b>{{ objets.produit.nomProduit }}</b></td>
+                        <td>{{ objets.produit.libelleProduit }}</td>
+                        <td class="tasksInput d-flex flex-row">
+                                <input type="number" name="quantite[{{ objets.produit.id }}]" value="{{ objets.quantite }}" >
                         </td>
-                        <td>{{ objets.produit.prixProduit }} €</td>
-                        <td class="d-flex flex-row">
-                            <input type="number" name="quantite[{{ objets.produit.id }}]" value="{{ objets.quantite }}">
-                        </td>
-                        <td>{{ objets.produit.prixProduit*objets.quantite }} €</td>
+                        <td>{{ objets.produit.prixProduit*objets.quantite }}€</td>
                         <td><a href="{{ path('panier_remove', {'id': objets.produit.id}) }}" class="text-danger"><i
                                         class="far fa-trash-alt"></i></a></td>
                     </tr>
@@ -44,11 +43,12 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="3" class="text-end">Total :</td>
-                    <td>{{ total }} €</td>
+                    <td colspan="5" class="bill text-end"><b>Total :</b></td>
+                    <td class="bill"><b>{{ total }} €</b></td>
                 </tr>
                 </tfoot>
             </table>
+            </div>
             <div class="d-flex justify-content-end">
                 <div class="d-flex flex-column">
                     {#                    ajouter ici un if avec la session : si l'utilisateur est connecté, validation commande, sinon page connexion/inscription#}
