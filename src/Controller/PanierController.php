@@ -5,8 +5,10 @@ namespace App\Controller;
 
 
 use App\Entity\AdresseLivraison;
+use App\Entity\Commandes;
 use App\Entity\Utilisateurs;
 use App\Repository\AdresseLivraisonRepository;
+use App\Repository\ModesLivraisonRepository;
 use App\Repository\PaysRepository;
 use App\Repository\UtilisateursRepository;
 use App\Service\Panier\PanierService;
@@ -76,7 +78,6 @@ class PanierController extends AbstractController
     }
 
 
-
     /**
      * @param PanierService $panierService
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -98,14 +99,14 @@ class PanierController extends AbstractController
      * @return Response
      * @Route("/panier/test" , name="testpanier")
      */
-    public function validationPanier(AuthenticationUtils $authenticationUtils, PanierService $panierService, PaysRepository $paysRepository,AdresseLivraisonRepository $adresseLivraisonRepository, UserInterface $user)
+    public function validationPanier(AuthenticationUtils $authenticationUtils, PanierService $panierService, PaysRepository $paysRepository, AdresseLivraisonRepository $adresseLivraisonRepository, UserInterface $user)
     {
-        if($this->getUser()){
+        if ($this->getUser()) {
 
 
-            if($adresseLivraisonRepository->findby([
-                'id_utilisateur'=>$user->getId()
-            ])){
+            if ($adresseLivraisonRepository->findby([
+                'id_utilisateur' => $user->getId()
+            ])) {
                 return $this->redirectToRoute('finalisation_commande');
 //                return $this->render('panier/validation.html.twig',[
 //                    'panier'=>$panierService->getFullPanier(),
@@ -116,15 +117,14 @@ class PanierController extends AbstractController
 //                    ])
 //                ]);
             }
-            return $this->render('panier/validation.html.twig',[
-                'panier'=>$panierService->getFullPanier(),
-                'total'=>$panierService->getTotal(),
-                'pays'=>$paysRepository->findAll()
+            return $this->render('panier/validation.html.twig', [
+                'panier' => $panierService->getFullPanier(),
+                'total' => $panierService->getTotal(),
+                'pays' => $paysRepository->findAll()
             ]);
-        }
-        else{
-            return $this->render('security/login.html.twig',[
-                'error'=>$authenticationUtils->getLastAuthenticationError(),
+        } else {
+            return $this->render('security/login.html.twig', [
+                'error' => $authenticationUtils->getLastAuthenticationError(),
                 'last_username' => $authenticationUtils->getLastUsername()
             ]);
         }
@@ -137,11 +137,11 @@ class PanierController extends AbstractController
      * @param Request $request
      * @Route("/panier/addr", name="panier_adresse")
      */
-    public function adresseLivraison(Request $request,UtilisateursRepository $user,PaysRepository $paysRepository)
+    public function adresseLivraison(Request $request, UtilisateursRepository $user, PaysRepository $paysRepository)
     {
         $adresselivraison = new AdresseLivraison();
-        $entityManager=$this->getDoctrine()->getManager();
-        $pays=$paysRepository->find($request->get('pays'));
+        $entityManager = $this->getDoctrine()->getManager();
+        $pays = $paysRepository->find($request->get('pays'));
         $adresselivraison->setCodePostalLivr($request->get('codep'));
         $adresselivraison->setIdUtilisateur($user->find($request->get('id')));
         $adresselivraison->setVilleLivr($request->get('ville'));
@@ -160,21 +160,40 @@ class PanierController extends AbstractController
      * @return Response
      * @Route("/putain", name="finalisation_commande")
      */
-    public function choixAdresse(AdresseLivraisonRepository $adresseLivraisonRepository, UserInterface $user,PaysRepository $paysRepository, PanierService $panierService)
+    public function choixAdresse(AdresseLivraisonRepository $adresseLivraisonRepository, UserInterface $user, PaysRepository $paysRepository, PanierService $panierService)
     {
-
-
-
-
-        return $this->render('panier/fincom.html.twig',[
-            'adresse'=>$adresseLivraisonRepository->findBy(['id_utilisateur'=>$user->getId()]),
-            'pays'=>$paysRepository->findAll(),
-            'panier'=>$panierService->getFullPanier(),
-            'total'=>$panierService->getTotal()
+        return $this->render('panier/fincom.html.twig', [
+            'adresse' => $adresseLivraisonRepository->findBy(['id_utilisateur' => $user->getId()]),
+            'pays' => $paysRepository->findAll(),
+            'panier' => $panierService->getFullPanier(),
+            'total' => $panierService->getTotal()
         ]);
     }
 
 
+    /**
+     * @param Request $request
+     * @Route("/paniervalide", name="panier_valide")
+     */
+    public function directionBdd(Request $request,AdresseLivraisonRepository $adresseLivraisonRepository,UserInterface $user,ModesLivraisonRepository $mode, PanierService $panier)
+    {
+//        dd($request->request);
+        $entityManager = $this->getDoctrine()->getManager();
+        $commandes = new Commandes();
+//        $adresse = new AdresseLivraison();
+        $commandes->setIdAddrLivr($adresseLivraisonRepository->findOneBy([
+            'id_utilisateur'=>$user->getId()
+        ]));
+        $commandes->setIdModeLivr($mode->find('1'));
+        $commandes->setTotalCommande($panier->getTotal());
+//        $commandes->setStatut('ok');
+        $commandes->setDateCom(new \DateTime());
+        $entityManager->persist($commandes);
+        $entityManager->flush();
+        return $this->redirectToRoute('home');
+
+
+    }
 
 
 }

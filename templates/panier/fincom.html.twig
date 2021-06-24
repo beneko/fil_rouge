@@ -5,20 +5,39 @@
 
     {% block body %}
 
-{#{{ dump(adresse) }}#}
-{#        <p>{{ adresse.0.villelivr }}</p>#}
+         {{ dump(adresse) }}
+        {# <p>{{ adresse.0.villelivr }}</p> #}
+        <form action="{{ path('panier_valide') }}" method="post">
         {% for adress in adresse %}
-        <input type="text" disabled value="{{ adress.villelivr }}">
-        <input type="text" disabled value="{{ adress.codepostallivr }}">
-        <input type="text" disabled value="{{ adress.adresselivraison }}">
-        <input type="text" disabled value="{{ adress.idpays.nompays }}">
-        <input type="text" disabled value="{{ adress.idutilisateur.nom }}">
-        <input type="text" disabled value="{{ adress.idutilisateur.prenom }}">
-{% endfor %}
-            <input type="text" value="{{ total }}€" disabled>
-{% for objet in panier %}
-        {{ dump(objet) }}
-    <textarea disabled value="">{{ objet.produit.nomproduit }}<br>{{ objet.produit.libelleproduit }}</textarea>
-            {% endfor %}
-
+            <div class="d-flex flex-column">
+                <label for="nom">Nom :</label>
+                <input type="text" disabled value="{{ adress.idutilisateur.nom }}" id="nom" class="col-8">
+                <label for="prenom"> Prénom :</label>
+                <input type="text" disabled value="{{ adress.idutilisateur.prenom }}" id="prenom" class="col-8">
+            <label for="adresse">adresse de livraison :</label>
+            <input type="text" disabled class="col-8"
+                   value="{{ adress.adresselivraison }} {{ adress.codepostallivr }} {{ adress.villelivr }} {{ adress.idpays.nompays }}"
+                   id="adresse">
+                <input type="hidden" value="{{ adress.adresselivraison }}" name="adresse">
+                <input type="hidden" value="{{ adress.codepostallivr }}" name="codep">
+                <input type="hidden" value="{{ adress.villelivr }}" name="ville">
+                <input type="hidden" value="{{ adress.idpays.id }}" name="pays">
+            </div>
+        {% endfor %}
+<div class="d-flex flex-row mt-3 mb-3">
+        {% for objet in panier %}
+{#            {{ dump(objet) }}#}
+            <div class="card me-2">
+                <h5 class="card-header">{{ objet.produit.nomproduit }}</h5>
+                <div class="card-body">
+                    <h5 class="card-title">{{ objet.produit.prixproduit}}€</h5>
+                    <p class="card-text">Nombre : {{ objet.quantite}}</p>
+                </div>
+            </div>
+        {% endfor %}
+</div>
+        <label for="total">Total à payer : </label>
+        <input type="text" value="{{ total }}€" disabled id="total">
+            <input type="submit" class="btn btn-success" value="valider la commande">
+        </form>
     {% endblock %}

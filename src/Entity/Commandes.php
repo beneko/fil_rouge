@@ -65,39 +65,6 @@ class Commandes
      */
     private $id_reduc;
 
-    /**
-     * @ORM\OneToMany(targetEntity=LigCom::class, mappedBy="refCommande", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
-    private $contenu_panier;
-//objetspanier
-    /**
-     * @var array
-     */
-    private $objet;
-
-    public function __construct()
-    {
-        $this->contenu_panier = new ArrayCollection();
-    }
-
-
-    /**
-     * @return array
-     */
-    public function getObjet(): array
-    {
-        return $this->objet;
-    }
-
-
-    /**
-     * @param array $objet
-     */
-    public function setObjet(array $objet): void
-    {
-        $this->objet = $objet;
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -133,20 +100,6 @@ class Commandes
     }
 
 
-
-
-    public function getTotalCommande(): float
-    {
-//        return $this->total_commande;
-        $total = 0;
-
-        foreach ($this->getContenuPanier() as $item) {
-            $total += $item->getComSousTot();
-        }
-
-        return $total;
-
-    }
 
     public function setTotalCommande(string $total_commande): self
     {
@@ -200,52 +153,6 @@ class Commandes
         return $this->contenu_panier;
     }
 
-    public function addContenuPanier(LigCom $objet): self
-    {
-//        if (!$this->contenu_panier->contains($contenuPanier)) {
-//            $this->contenu_panier[] = $contenuPanier;
-//            $contenuPanier->setRefCommande($this);
-//        }
-//
-//        return $this;
-
-
-
-        foreach ($this->getContenuPanier() as $existingItem) {
-            // The item already exists, update the quantity
-            if ($existingItem->equals($objet)) {
-                $existingItem->setQteProduit(
-                    $existingItem->getQteProduit() + $objet->getQteProduit()
-                );
-                return $this;
-            }
-        }
-
-        $this->objet[] = $objet;
-        $objet->setRefCommande($this);
-
-        return $this;
-
-    }
-
-    public function removeContenuPanier(LigCom $contenuPanier): self
-    {
-//        if ($this->contenu_panier->removeElement($contenuPanier)) {
-//            // set the owning side to null (unless already changed)
-//            if ($contenuPanier->getRefCommande() === $this) {
-//                $contenuPanier->setRefCommande(null);
-//            }
-//        }
-//
-//        return $this;
-
-
-        foreach ($this->getContenuPanier() as $item) {
-            $this->removeContenuPanier($item);
-        }
-        return $this;
-
-    }
 
 
 
