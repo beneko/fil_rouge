@@ -6,9 +6,12 @@ use App\Entity\Marques;
 use App\Form\MarquesType;
 use App\Repository\MarquesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 /**
  * @Route("/marques")
@@ -35,22 +38,34 @@ class MarquesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $img = $form->get('picture')->getData();
+
+            /**
+             *   @var UploadedFile $imgFile
+             */
+
+            $imgFile = $form->get('logo_marque')->getData();
 
 
-//            if($imgFile) {
-//                $originalFichier = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
-//                $ok_nom_fichier = transliterator_transliterate('')
-//            }
+            if ($imgFile) {
+                $originalFichier = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
 
+                $nouvo_nom_fichier = $originalFichier . "-." . $imgFile->guessExtension();
 
-
-
+                try {
+                    $imgFile->move(
+                        $this->getParameter('dossier_image'),
+                        $nouvo_nom_fichier
+                    );
+                } catch (FileException $e) {
+                }
+                $marque->setLogoMarque($nouvo_nom_fichier);
+            }
 
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($marque);
             $entityManager->flush();
+
             return $this->redirectToRoute('marques_index');
         }
 

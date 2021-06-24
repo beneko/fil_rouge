@@ -13,9 +13,7 @@ h1 {
     margin-bottom: 30px;
     margin-top: 30px;
 }
-img#pictures{
-    height: 12rem!important;
-}
+
 
 
 @media (min-width: 330px) and (max-width: 1199.98px) {
