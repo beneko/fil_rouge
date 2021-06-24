@@ -57,8 +57,13 @@
                 {# navbar button #}
                   {# Button Compte #}
                 <div class="col-md-2 col-6 col-lg-1 justify-content-end justify-content-lg-end d-flex">
-                    <a href="{{ path('app_login') }}" class="compte rounded-circle border border-4 border-dark p-3 m-2">
-                        <i class="iconi fs-4 fa fa-user-plus"></i></a>
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="{{ path('utilisateurs_compte', {'id': app.user.id}) }}" class="compte rounded-circle border border-4 border-dark p-3 m-2">
+                            <i class="iconi fs-5 fas fa-user-check"></i></a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="compte rounded-circle border border-4 border-dark p-3 m-2">
+                            <i class="iconi fs-5 fa fa-user-plus"></i></a>
+                    {% endif %}
                 </div>
                   {# Button Panier #}
                 <div class="col-md-2 col-6 col-lg-1 justify-content-start justify-content-lg-end d-flex">
