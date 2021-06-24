@@ -1,0 +1,16 @@
+@media (min-width: 990px) {
+    .pics{
+        width: 20%;
+        height: auto;
+        display: block;
+    }
+}
+
+
+/*.tasksInput{*/
+
+/*}*/
+
+.bill{
+    color: #c70b0b !important
+}
