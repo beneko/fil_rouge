@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+
+
+    {% block body %}
+<h1>Entrez votre adresse de livraison</h1>
+        <form action="{{ path('panier_adresse') }}" method="post" class="form-group">
+
+            <label for="ville"> Entrez la ville où vous souhaiter vous faire livrer:</label>
+            <input type="text" placeholder="Indiquez la ville de livraison" class="form-control" id="ville" name="ville">
+            <label for="codep"> Entrez le code postal de la ville où vous souhaiter vous faire livrer</label>
+            <input type="text" placeholder="indiquez le code postal de la ville de livraison" class="form-control" id="codep" name="codep">
+            <label for="adresse">Entrez votre adresse de livraison :</label>
+            <input type="text" placeholder="indiquez l'adresse de livraison" class="form-control" id="adresse" name="adresse">
+            <label for="pays"></label>
+            <select name="pays" id="pays">
+                {% for pay in pays %}
+                <option value="{{ pay.id }}">{{ pay.nomPays }}</option>
+                {% endfor %}
+            </select>
+            <input type="hidden" value="{{ app.user.id }}" name="id">
+            <input type="submit" value="envoyer" class="form-control btn btn-info">
+
+        </form>
+
+    {% endblock %}

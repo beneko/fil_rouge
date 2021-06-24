@@ -35,8 +35,9 @@
 
             {# Logo #}
             <div class="col-md-5 col-12 col-lg-6 justify-content-center justify-content-lg-start d-flex">
-                <a href="">
-                    <img src="{{ asset('images/Logo01.png') }}" class="img-fluid" alt="Digitall">
+
+                <a href="{{ path('home') }}">
+                    <img src="{{ asset('images/Logo04.png') }}" class="img-fluid" alt="Digitall">
                 </a>
             </div>
             {# End Logo #}
@@ -54,14 +55,19 @@
                 {# End search #}
 
                 {# navbar button #}
-                  {# Button Compt #}
+                  {# Button Compte #}
                 <div class="col-md-2 col-6 col-lg-1 justify-content-end justify-content-lg-end d-flex">
-                    <a href="{{ path('login') }}" class="compte rounded-circle border border-4 border-dark p-3 m-2">
-                        <i class="iconi fs-4 fa fa-user-plus"></i></a>
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="{{ path('utilisateurs_compte', {'id': app.user.id}) }}" class="compte rounded-circle border border-4 border-dark p-3 m-2">
+                            <i class="iconi fs-5 fas fa-user-check"></i></a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="compte rounded-circle border border-4 border-dark p-3 m-2">
+                            <i class="iconi fs-5 fa fa-user-plus"></i></a>
+                    {% endif %}
                 </div>
                   {# Button Panier #}
                 <div class="col-md-2 col-6 col-lg-1 justify-content-start justify-content-lg-end d-flex">
-                    <a href="" class="panier  rounded-circle border border-4 border-dark p-3  m-2">
+                    <a href="{{ path('panier_index') }}" class="panier  rounded-circle border border-4 border-dark p-3  m-2">
                         <i class="iconi fs-4 fas fa-shopping-cart"></i></a>
                 </div>
         </div>
@@ -79,7 +85,7 @@
                     <div class="justify-content-center collapse navbar-collapse" id="navbarNavAltMarkup">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Smartphones</a>
+                                <a class="nav-link" href="{{ path('produits_index') }}">Smartphones</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Tablettes</a>
@@ -174,7 +180,7 @@
     <!-- Copyright -->
     <div class="foot text-center p-4">
         © 2021 Copyright:
-        <a class="text-reset fw-bold" href="digitall.com">Digitall.com</a>
+        <a class="text-reset fw-bold" href="{{ path('home') }}">Digitall.com</a>
     </div>
     <!-- Copyright -->
 </footer>

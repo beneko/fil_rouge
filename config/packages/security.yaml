@@ -19,11 +19,15 @@ security:
         main:
             anonymous: true
             logout:
-                path: /logout
+                path: app_logout
+                # where to redirect after logout
                 target: /
             form_login:
-                check_path: /login
+                check_path: app_login
             provider: app_user_provider
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -36,6 +40,7 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        # -   { path: ^/utilisateurs, roles: ROLE_ADMIN }
-        # -   { path: ^/utilisateurs, roles: ROLE_ADMIN }
+        # -  { path: ^/utilisateurs, roles: ROLE_USER}
+        # - { path: ^/utilisateurs/profil, roles: ROLE_USER }
+        # - { path: ^/utilisateurs/profil, roles: ROLE_USER }
 

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre Profil{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center border border-4 border-secondary rounded m-5">
+        <div class="col-12 col-md-8 p-5">
+            <h1>Espace Client</h1>
+
+
+            <h3>Bienvenu(e) {{ utilisateur.nom }} </h3>
+
+            <div class="d-grid gap-2 d-sm-block">
+                <a class="btn btn-primary" href="{{ path('utilisateurs_show', {'id': utilisateur.id}) }}">détail de profil</a>
+                <a class="btn btn-warning" href="{{ path('utilisateurs_edit', {'id': utilisateur.id}) }}">Modifier le profil</a>
+                <a class="btn btn-danger" href="{{ path('app_logout') }}">Se déconnecter</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
