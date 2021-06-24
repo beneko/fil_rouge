@@ -19,6 +19,13 @@ class AdresseLivraisonRepository extends ServiceEntityRepository
         parent::__construct($registry, AdresseLivraison::class);
     }
 
+
+
+//    public function ajouterAdresse()
+//    {
+//        $requete=$this->_em->createQuery('INSERT INTO App\Entity\AdresseLivraison() VALUES ');
+//    }
+
     // /**
     //  * @return AdresseLivraison[] Returns an array of AdresseLivraison objects
     //  */

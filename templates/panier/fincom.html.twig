@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+
+
+
+    {% block body %}
+
+{#{{ dump(adresse) }}#}
+{#        <p>{{ adresse.0.villelivr }}</p>#}
+        {% for adress in adresse %}
+        <input type="text" disabled value="{{ adress.villelivr }}">
+        <input type="text" disabled value="{{ adress.codepostallivr }}">
+        <input type="text" disabled value="{{ adress.adresselivraison }}">
+        <input type="text" disabled value="{{ adress.idpays.nompays }}">
+        <input type="text" disabled value="{{ adress.idutilisateur.nom }}">
+        <input type="text" disabled value="{{ adress.idutilisateur.prenom }}">
+{% endfor %}
+            <input type="text" value="{{ total }}€" disabled>
+{% for objet in panier %}
+        {{ dump(objet) }}
+    <textarea disabled value="">{{ objet.produit.nomproduit }}<br>{{ objet.produit.libelleproduit }}</textarea>
+            {% endfor %}
+
+    {% endblock %}
