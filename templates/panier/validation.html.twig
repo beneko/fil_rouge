@@ -3,6 +3,7 @@
 
 
     {% block body %}
+
 <h1>Entrez votre adresse de livraison</h1>
         <form action="{{ path('panier_adresse') }}" method="post" class="form-group">
 
@@ -20,7 +21,11 @@
             </select>
             <input type="hidden" value="{{ app.user.id }}" name="id">
             <input type="submit" value="envoyer" class="form-control btn btn-info">
-
         </form>
-
+{#{{ dump(app.user) }}#}
+        <h2>Adresses utilisées par {{ app.user.nom }} {{ app.user.prenom }}</h2>
+{#        {{ dump(adresse) }}#}
+        {% for adress in adresse %}
+            <p>{{ adress.adresselivraison }} {{ adress.codepostallivr }} {{ adress.villelivr }}</p>
+        {% endfor %}
     {% endblock %}
