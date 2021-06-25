@@ -17,9 +17,9 @@
                         <label for="adresse{{ adress.id }}">Selectionner cette adresse</label>
                         {% if adress.id=='1' %}
                             <input type="radio" id="adresse{{ adress.id }}" name="id_livr" value="{{ adress.id }}"
-                                   checked>
+                                   checked >
                         {% else %}
-                            <input type="radio" id="adresse{{ adress.id }}" name="id_livr" value="{{ adress.id }}">
+                            <input type="radio" id="adresse{{ adress.id }}" name="id_livr" value="{{ adress.id }}" required>
                         {% endif %}
                     </div>
                 </div>
