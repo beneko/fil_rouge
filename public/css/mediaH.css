@@ -13,7 +13,21 @@
 
     .poids{
         display: none;
+    }
 
+    .img{
+        max-width: 250px;
+        height: auto;
+    }
+
+}
+
+@media screen and (min-width:421px) and (max-width:790px)
+{
+
+    .img{
+       max-width: 350px ;
+        height: auto;
     }
 
 }
@@ -21,3 +35,14 @@
 
 
 
+
+
+@media screen and (min-width:791px)
+{
+
+    .img{
+        height: auto ;
+        max-width: 300px;
+    }
+
+}

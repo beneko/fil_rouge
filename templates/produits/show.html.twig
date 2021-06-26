@@ -12,7 +12,7 @@
 
     <div class="content d-flex flex-column flex-md-row">
         <div class=" col-md-6 d-flex justify-content-center">
-            <img src="{{ asset('/images/')~produit.image }}">
+            <img class="img" src="{{ asset('/images/')~produit.image }}">
         </div>
         <table class="table mt-2 mt-md-0">
             <tbody>
@@ -46,9 +46,9 @@
     <div class="d-flex flex-row justify-content-center pb-200">
         <a href="{{ path('produits_index') }}" class="btn btn-dark m-0 me-1">Retour</a>
 
-        <a href="{{ path('produits_edit', {'id': produit.id}) }}" class="btn btn-warning m-0 ms-1 me-1">Modifier</a>
+{#        <a href="{{ path('produits_edit', {'id': produit.id}) }}" class="btn btn-warning m-0 ms-1 me-1">Modifier</a>#}
         <a href="{{ path('panier_add', {'id': produit.id }) }}" class="btn btn-info ms-1 me-1"> ajouter au panier</a>
 
-        {{ include('produits/_delete_form.html.twig') }}
+{#        {{ include('produits/_delete_form.html.twig') }}#}
     </div>
 {% endblock %}

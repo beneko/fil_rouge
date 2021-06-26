@@ -23,11 +23,6 @@ class LigCom
      */
     private $id_produit;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Commandes::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $id_commande;
 
     /**
      * @ORM\Column(type="integer")
@@ -68,17 +63,6 @@ class LigCom
         return $this;
     }
 
-    public function getIdCommande(): ?Commandes
-    {
-        return $this->id_commande;
-    }
-
-    public function setIdCommande(?Commandes $id_commande): self
-    {
-        $this->id_commande = $id_commande;
-
-        return $this;
-    }
 
     public function getQteProduit(): ?int
     {

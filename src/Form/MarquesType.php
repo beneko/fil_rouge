@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extention\Core\Type\SubmitType;
 
 class MarquesType extends AbstractType
 {
@@ -16,8 +17,8 @@ class MarquesType extends AbstractType
         $builder
             ->add('nom_marque')
             ->add('libelle_marque')
-            ->add('logo_marque')
-            ->add('picture', FileType::class,[
+//            ->add('logo_marque')
+            ->add('logo_marque', FileType::class,[
                 'label' =>'Picture (fichier image)',
                 // non mappé pour ne pas l'associé a une entité
                 'mapped' => false,
