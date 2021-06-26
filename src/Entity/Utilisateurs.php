@@ -4,11 +4,16 @@ namespace App\Entity;
 
 use App\Repository\UtilisateursRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateursRepository::class)
+ * @UniqueEntity(
+ *     fields = {"mail"},
+ *     message = "l'adresse mail que vous avez indiqué est dèja utilisé !"
+ * )
  */
 class Utilisateurs implements UserInterface
 {
@@ -44,10 +49,15 @@ class Utilisateurs implements UserInterface
      * )
      * @Assert\Regex(
      *     pattern="/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/",
-     *     message="Caratère(s) non valide(s)"
+     *     message="le mot de passe doit contenir au minimum 8 caractères avec au moin une majuscule une minuscule et un chiffre"
      * )
      */
     private $password;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password" ,message="Vous n'avez pas tapé le même mot de passe")
+     */
+    private $confirm_password;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -59,6 +69,7 @@ class Utilisateurs implements UserInterface
      *     message="Caratère(s) non valide(s)"
      * )
      */
+
     private $nom;
 
     /**
@@ -134,6 +145,17 @@ class Utilisateurs implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+    public function getConfirmPassword(): ?string
+    {
+        return $this->confirm_password;
+    }
+
+    public function setConfirmPassword(string $confirm_password): self
+    {
+        $this->confirm_password = $confirm_password;
 
         return $this;
     }

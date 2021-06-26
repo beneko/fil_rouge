@@ -42,7 +42,7 @@ class PaysController extends AbstractController
             return $this->redirectToRoute('pays_index');
         }
 
-        return $this->render('pays/new.html.twig', [
+        return $this->render('pays/register.html.twig', [
             'pay' => $pay,
             'form' => $form->createView(),
         ]);

@@ -57,7 +57,7 @@
                 {# navbar button #}
                   {# Button Compte #}
                 <div class="col-md-2 col-6 col-lg-1 justify-content-end justify-content-lg-end d-flex">
-                    {% if is_granted('ROLE_USER') %}
+                    {% if app.user %}
                         <a href="{{ path('utilisateurs_compte', {'id': app.user.id}) }}" class="compte rounded-circle border border-4 border-dark p-3 m-2">
                             <i class="iconi fs-5 fas fa-user-check"></i></a>
                     {% else %}
@@ -115,6 +115,12 @@
 
 {# body #}
 <div class="container py-5">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     {% block body %}{% endblock %}
 </div>
 

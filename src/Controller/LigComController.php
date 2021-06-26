@@ -42,7 +42,7 @@ class LigComController extends AbstractController
             return $this->redirectToRoute('lig_com_index');
         }
 
-        return $this->render('lig_com/new.html.twig', [
+        return $this->render('lig_com/register.html.twig', [
             'lig_com' => $ligCom,
             'form' => $form->createView(),
         ]);

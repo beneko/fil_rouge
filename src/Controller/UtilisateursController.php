@@ -11,9 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-/**
- * @Route("/utilisateurs")
- */
+
 class UtilisateursController extends AbstractController
 {
     private $passwordEncoder;
@@ -22,18 +20,9 @@ class UtilisateursController extends AbstractController
     {
         $this->passwordEncoder = $passwordEncoder;
     }
-    /**
-     * @Route("/", name="utilisateurs_index", methods={"GET"})
-     */
-    public function index(UtilisateursRepository $utilisateursRepository): Response
-    {
-        return $this->render('utilisateurs/index.html.twig', [
-            'utilisateurs' => $utilisateursRepository->findAll(),
-        ]);
-    }
 
     /**
-     * @Route("/new", name="utilisateurs_new", methods={"GET","POST"})
+     * @Route("/register", name="app_register")
      */
     public function new(Request $request): Response
     {
@@ -48,18 +37,21 @@ class UtilisateursController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($utilisateur);
             $entityManager->flush();
-
-            return $this->redirectToRoute('home');
+            $this->addFlash(
+                'success',
+                'Vous vous êtes bien inscrit ! !!'
+            );
+            return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('utilisateurs/new.html.twig', [
+        return $this->render('utilisateurs/register.html.twig', [
             'utilisateur' => $utilisateur,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/{id}", name="utilisateurs_show", methods={"GET"})
+     * @Route("/show/{id}", name="utilisateurs_show", methods={"GET"})
      */
     public function show(Utilisateurs $utilisateur): Response
     {
@@ -69,7 +61,7 @@ class UtilisateursController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="utilisateurs_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="utilisateurs_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Utilisateurs $utilisateur): Response
     {
@@ -82,7 +74,9 @@ class UtilisateursController extends AbstractController
             );
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('app_compte', [
+                'id' => $this->getId()
+            ]);
         }
 
         return $this->render('utilisateurs/edit.html.twig', [
@@ -91,22 +85,9 @@ class UtilisateursController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="utilisateurs_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Utilisateurs $utilisateur): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$utilisateur->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($utilisateur);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('utilisateurs_index');
-    }
 
     /**
-     * @Route("/{id}/compte", name="utilisateurs_compte", methods={"GET"})
+     * @Route("/compte/{id}", name="utilisateurs_compte", methods={"GET"})
      */
     public function compte(Utilisateurs $utilisateur): Response
     {

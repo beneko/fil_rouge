@@ -42,7 +42,7 @@ class CommandesController extends AbstractController
             return $this->redirectToRoute('commandes_index');
         }
 
-        return $this->render('commandes/new.html.twig', [
+        return $this->render('commandes/register.html.twig', [
             'commande' => $commande,
             'form' => $form->createView(),
         ]);

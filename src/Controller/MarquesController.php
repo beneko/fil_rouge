@@ -54,7 +54,7 @@ class MarquesController extends AbstractController
             return $this->redirectToRoute('marques_index');
         }
 
-        return $this->render('marques/new.html.twig', [
+        return $this->render('marques/register.html.twig', [
             'marque' => $marque,
             'form' => $form->createView(),
         ]);
