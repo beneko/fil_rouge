@@ -10,8 +10,8 @@
         {% for produit in produits %}
             <div class="col-xl-3 square col-sm-6 mb-2">
                 <div class="card">
-                    <div class="card-header card-img-top">
-                        <img src="{{asset('/images/')~produit.image}}" class="img-fluid" id="pictures" alt="Photo smartphone">
+                    <div class="card-header d-flex justify-content-center">
+                        <img src="{{asset('/images/')~produit.image}}" class="img-fluid card-img-top" id="pictures" alt="Photo smartphone">
                     </div>
                     <div class="card-body">
                         <p class="card-title"><b>{{ produit.nomProduit }}</b></p>
