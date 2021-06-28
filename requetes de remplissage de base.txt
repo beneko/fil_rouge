@@ -29,4 +29,21 @@ INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, pr
 INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (6,6,'OnePlus 8T','Oneplus 8T 5G 128 Go 4500 mAh - SILVER',482.00,19,0.20,4,'OnePlus8T.jpg');
 INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (7,3,'Oppo Find X2','8G+256GB 5G Snapdragon 865 (Noir (Céramique)',685.00,230,0.21,4,'OppoFindX2.jpg');
 INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (8,5,'Xiaomi Mix X','Xiaomi Mix X  128 Go',1300.00,22,0.30,4,'XiaomiMixX.png');
-INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (9,1,'Apple airpods','écouteurs sans fil de la marque Airpods de chez Apple',229.00,22,0.04,8,'airpods.jpg');
+INSERT INTO digitall.produits(id, id_marque_id, nom_produit, libelle_produit, prix_produit, stock_produit, pds_produit, categorie_id, image) VALUES (9,1,'Apple airpods,'écouteurs sans fil de la marque Airpods de chez Apple',229.00,22,0.04,8,'airpods.jpg');
+
+
+
+INSERT INTO digitall.pays(id, nom_pays) VALUES (1,'FRANCE');
+INSERT INTO digitall.pays(id, nom_pays) VALUES (2,'ESPAGNE');
+INSERT INTO digitall.pays(id, nom_pays) VALUES (3,'BOCHIE');
+INSERT INTO digitall.pays(id, nom_pays) VALUES (4,'PORTUGAL');
+INSERT INTO digitall.pays(id, nom_pays) VALUES (5,'ITALIE');
+INSERT INTO digitall.pays(id, nom_pays) VALUES (6,'ROYAUME-UNI');
+
+
+
+INSERT INTO digitall.modes_livraison(id, nom_mode, libelle_liv, delai_moy_liv) VALUES (1,'chronopost','par chronopost',4);
+INSERT INTO digitall.modes_livraison(id, nom_mode, libelle_liv, delai_moy_liv) VALUES (2,'express','livraison express',1);
+INSERT INTO digitall.modes_livraison(id, nom_mode, libelle_liv, delai_moy_liv) VALUES (3,'AirPigeon','par pigeon voyageur : possibilité de ne jamais recevoir le colis',34);
+INSERT INTO digitall.modes_livraison(id, nom_mode, libelle_liv, delai_moy_liv) VALUES (4,'Wish','contrefaçon chinoise',65);
+INSERT INTO digitall.modes_livraison(id, nom_mode, libelle_liv, delai_moy_liv) VALUES (5,'Amazon','on se décharge de ça en faisant du dropshipping',4);
