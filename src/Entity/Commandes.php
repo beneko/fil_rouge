@@ -46,6 +46,11 @@ class Commandes
      */
     private $id_reduc;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=AdresseLivraison::class)
+     */
+    private $adr_fact;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -132,6 +137,18 @@ class Commandes
     public function getContenuPanier(): Collection
     {
         return $this->contenu_panier;
+    }
+
+    public function getAdrFact(): ?AdresseLivraison
+    {
+        return $this->adr_fact;
+    }
+
+    public function setAdrFact(?AdresseLivraison $adr_fact): self
+    {
+        $this->adr_fact = $adr_fact;
+
+        return $this;
     }
 
 

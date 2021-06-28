@@ -4,8 +4,7 @@
 
 
     {% block body %}
-
-        {{ dump(modes) }}
+        {{ dump(adresse) }}
         <form action="{{ path('panier_valide') }}" method="post">
             {% for adress in adresse %}
                 <div class="d-flex flex-row col-12 border border-dark">
@@ -22,6 +21,14 @@
                                    required>
                         {% endif %}
                     </div>
+                    {% if adress.adrfacturation is same as(true) %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" value="{{ adress.id }}" id="adrfact" name="fact" required>
+                            <label class="form-check-label" for="adrfact">
+                                Cochez si vous voulez que cette adresse serve d'adresse de facturation.
+                            </label>
+                        </div>
+                    {% endif %}
                 </div>
             {% endfor %}
             <div class="d-flex flex-row mt-3 mb-3">
@@ -36,9 +43,7 @@
                 </div>
 
             </div>
-
             {% endfor %}
-
             {% for mode in modes %}
                 <div class="d-flex flex-row col-12 align-items-center border-bottom border-dark">
                     <div class="col-6 me-auto">
@@ -49,11 +54,15 @@
                         <input type="radio" value="{{ mode.id }}" required id="mode{{ mode.id }}" name="mode"></div>
                 </div>
             {% endfor %}
-            <div class="mt-2">
-                <label for="total">Total à payer : </label>
-                <input type="text" value="{{ total }}€" disabled id="total">
-                <input type="submit" class="btn btn-success" value="valider la commande">
-                <a href="{{ path('autre_adresse') }}">Entrer une autre adresse</a>
+            <div class="mt-3 d-flex flex-column">
+                <div class="mb-2">
+                    <label for="total">Total à payer : </label>
+                    <input type="text" value="{{ total }}€" disabled id="total">
+                </div>
+                <div class="mt-2">
+                    <input type="submit" class="btn btn-success" value="valider la commande">
+                    <a href="{{ path('autre_adresse') }}" class="btn btn-info">Entrer une autre adresse de livraison
+                        et/ou de facturation</a></div>
             </div>
         </form>
     {% endblock %}

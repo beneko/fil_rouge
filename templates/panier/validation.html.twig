@@ -18,6 +18,12 @@
                 <option value="{{ pay.id }}">{{ pay.nomPays }}</option>
                 {% endfor %}
             </select>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="true" id="adrfact" name="fact">
+                <label class="form-check-label" for="adrfact">
+                    Cochez si vous voulez que cette adresse serve également d'adresse de facturation.
+                </label>
+            </div>
             <input type="hidden" value="{{ app.user.id }}" name="id">
             <input type="submit" value="envoyer" class="form-control btn btn-info">
         </form>
