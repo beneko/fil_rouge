@@ -173,12 +173,11 @@ function adresseLivraison(Request $request, UtilisateursRepository $user, PaysRe
 {
     $adresselivraison = new AdresseLivraison();
     $entityManager = $this->getDoctrine()->getManager();
-    $pays = $paysRepository->find($request->get('pays'));
     $adresselivraison->setCodePostalLivr($request->get('codep'));
     $adresselivraison->setIdUtilisateur($user->find($request->get('id')));
     $adresselivraison->setVilleLivr($request->get('ville'));
     $adresselivraison->setAdresseLivraison($request->get('adresse'));
-    $adresselivraison->setIdPays($pays);
+    $adresselivraison->setIdPays($paysRepository->find($request->get('pays')));
     $entityManager->persist($adresselivraison);
     $entityManager->flush();
     return $this->render('home/index.html.twig');
@@ -206,23 +205,23 @@ function choixAdresse(AdresseLivraisonRepository $adresseLivraisonRepository, Us
 }
 
 
-/**
- * @param CommandesRepository $commandesRepository
- * @param Request $request
- * @param AdresseLivraisonRepository $adresseLivraisonRepository
- * @param UserInterface $user
- * @param ModesLivraisonRepository $mode
- * @param PanierService $panier
- * @return RedirectResponse
- * @Route("/paniervalide", name="panier_valide")
- */
+    /**
+     * @param ProduitsRepository $produitsRepository
+     * @param SessionInterface $session
+     * @param CommandesRepository $commandesRepository
+     * @param Request $request
+     * @param AdresseLivraisonRepository $adresseLivraisonRepository
+     * @param UserInterface $user
+     * @param ModesLivraisonRepository $mode
+     * @param PanierService $panier
+     * @return RedirectResponse
+     * @Route("/paniervalide", name="panier_valide")
+     */
 public
 function directionBdd(ProduitsRepository $produitsRepository, SessionInterface $session, CommandesRepository $commandesRepository, Request $request, AdresseLivraisonRepository $adresseLivraisonRepository, UserInterface $user, ModesLivraisonRepository $mode, PanierService $panier): RedirectResponse
 {
-//        dd($request->request);
     $entityManager = $this->getDoctrine()->getManager();
     $commandes = new Commandes();
-//        $adresse = new AdresseLivraison();
     $commandes->setIdAddrLivr($adresseLivraisonRepository->findOneBy([
         'id_utilisateur' => $user->getId(),
         'id' => $request->get('id_livr')
@@ -234,12 +233,7 @@ function directionBdd(ProduitsRepository $produitsRepository, SessionInterface $
     $entityManager->flush();
 
     $pan = $session->get('panier');
-//        dd($pan);
-//        $prix = $panier->getFullPanier();
-//        dd($prix[0]['produit']->prix_produit);
-
     foreach ($pan as $produit => $qte) {
-//            var_dump($produit);
         $ligcom = new LigCom();
         $ligcom->setIdProduit($produitsRepository->findOneBy([
             'id' => $produit
@@ -258,7 +252,6 @@ function directionBdd(ProduitsRepository $produitsRepository, SessionInterface $
         $entityManager->persist($ligcom);
         $entityManager->flush();
     }
-//        dd($ligcom);
     $panier->supprimerPanier();
     return $this->redirectToRoute('home');
 
