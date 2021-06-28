@@ -31,7 +31,7 @@ final class Version20210616084617 extends AbstractMigration
         $this->addSql('CREATE TABLE reduc_passee (id INT AUTO_INCREMENT NOT NULL, id_reduc_id INT NOT NULL, INDEX IDX_DEF97F9A10C6A06F (id_reduc_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE reduc_passee_utilisateurs (reduc_passee_id INT NOT NULL, utilisateurs_id INT NOT NULL, INDEX IDX_D89A4E8AFA03D749 (reduc_passee_id), INDEX IDX_D89A4E8A1E969C5 (utilisateurs_id), PRIMARY KEY(reduc_passee_id, utilisateurs_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE reduction (id INT AUTO_INCREMENT NOT NULL, nom_reduc VARCHAR(255) NOT NULL, montant_reduc NUMERIC(10, 2) NOT NULL, date_debut DATETIME NOT NULL, date_fin DATETIME NOT NULL, qte_reduction INT NOT NULL, statut_reduc VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE utilisateurs (id INT AUTO_INCREMENT NOT NULL, id_pays_id INT NOT NULL, nom VARCHAR(255) NOT NULL, prenom VARCHAR(255) NOT NULL, mot_de_passe VARCHAR(255) NOT NULL, telephone VARCHAR(255) NOT NULL, mail VARCHAR(255) NOT NULL, code_postal VARCHAR(255) NOT NULL, ville VARCHAR(255) NOT NULL, adresse VARCHAR(255) DEFAULT NULL, date_naissance DATETIME DEFAULT NULL, INDEX IDX_497B315E7879EB34 (id_pays_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE utilisateurs (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(255) NOT NULL, prenom VARCHAR(255) NOT NULL, mot_de_passe VARCHAR(255) NOT NULL, telephone VARCHAR(255) NOT NULL, mail VARCHAR(255) NOT NULL, code_postal VARCHAR(255) NOT NULL, ville VARCHAR(255) NOT NULL, adresse VARCHAR(255) DEFAULT NULL, date_naissance DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE adresse_livraison ADD CONSTRAINT FK_B0B09C9C6EE5C49 FOREIGN KEY (id_utilisateur_id) REFERENCES utilisateurs (id)');
         $this->addSql('ALTER TABLE adresse_livraison ADD CONSTRAINT FK_B0B09C97879EB34 FOREIGN KEY (id_pays_id) REFERENCES pays (id)');
         $this->addSql('ALTER TABLE categories ADD CONSTRAINT FK_3AF34668C09A1CAE FOREIGN KEY (id_cat_id) REFERENCES categories (id)');
@@ -43,7 +43,6 @@ final class Version20210616084617 extends AbstractMigration
         $this->addSql('ALTER TABLE reduc_passee ADD CONSTRAINT FK_DEF97F9A10C6A06F FOREIGN KEY (id_reduc_id) REFERENCES reduction (id)');
         $this->addSql('ALTER TABLE reduc_passee_utilisateurs ADD CONSTRAINT FK_D89A4E8AFA03D749 FOREIGN KEY (reduc_passee_id) REFERENCES reduc_passee (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE reduc_passee_utilisateurs ADD CONSTRAINT FK_D89A4E8A1E969C5 FOREIGN KEY (utilisateurs_id) REFERENCES utilisateurs (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE utilisateurs ADD CONSTRAINT FK_497B315E7879EB34 FOREIGN KEY (id_pays_id) REFERENCES pays (id)');
     }
 
     public function down(Schema $schema): void
