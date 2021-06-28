@@ -44,6 +44,11 @@ class AdresseLivraison
      */
     private $id_pays;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $adr_facturation;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +110,18 @@ class AdresseLivraison
     public function setIdPays(?Pays $id_pays): self
     {
         $this->id_pays = $id_pays;
+
+        return $this;
+    }
+
+    public function getAdrFacturation(): ?bool
+    {
+        return $this->adr_facturation;
+    }
+
+    public function setAdrFacturation(?bool $adr_facturation): self
+    {
+        $this->adr_facturation = $adr_facturation;
 
         return $this;
     }

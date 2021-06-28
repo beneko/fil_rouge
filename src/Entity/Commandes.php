@@ -12,25 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Commandes
 {
-
-
-    // ...
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $statut = self::STATUT_PANIER;
-
-    /**
-     * An order that is in progress, not placed yet.
-     *
-     * @var string
-     */
-    const STATUT_PANIER = 'panier';
-
-
-
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -64,6 +45,11 @@ class Commandes
      * @ORM\ManyToOne(targetEntity=Reduction::class)
      */
     private $id_reduc;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=AdresseLivraison::class)
+     */
+    private $adr_fact;
 
     public function getId(): ?int
     {
@@ -151,6 +137,18 @@ class Commandes
     public function getContenuPanier(): Collection
     {
         return $this->contenu_panier;
+    }
+
+    public function getAdrFact(): ?AdresseLivraison
+    {
+        return $this->adr_fact;
+    }
+
+    public function setAdrFact(?AdresseLivraison $adr_fact): self
+    {
+        $this->adr_fact = $adr_fact;
+
+        return $this;
     }
 
 

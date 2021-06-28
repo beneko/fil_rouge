@@ -19,6 +19,7 @@ h1 {
 @media (min-width: 330px) and (max-width: 1199.98px) {
     .row{ justify-content: center;}
 
+
 }
 
 div.card{
@@ -33,7 +34,7 @@ height: 100%!important;
 
 .card-img-top, .img-fluid {
     width:auto;
-    height:auto;
+    height: 12rem;
 }
 
 p{

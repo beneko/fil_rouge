@@ -6,7 +6,6 @@
 
 <h1>Entrez votre adresse de livraison</h1>
         <form action="{{ path('panier_adresse') }}" method="post" class="form-group">
-
             <label for="ville"> Entrez la ville où vous souhaiter vous faire livrer:</label>
             <input type="text" placeholder="Indiquez la ville de livraison" class="form-control" id="ville" name="ville">
             <label for="codep"> Entrez le code postal de la ville où vous souhaiter vous faire livrer</label>
@@ -19,12 +18,16 @@
                 <option value="{{ pay.id }}">{{ pay.nomPays }}</option>
                 {% endfor %}
             </select>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="true" id="adrfact" name="fact">
+                <label class="form-check-label" for="adrfact">
+                    Cochez si vous voulez que cette adresse serve également d'adresse de facturation.
+                </label>
+            </div>
             <input type="hidden" value="{{ app.user.id }}" name="id">
             <input type="submit" value="envoyer" class="form-control btn btn-info">
         </form>
-{#{{ dump(app.user) }}#}
         <h2>Adresses utilisées par {{ app.user.nom }} {{ app.user.prenom }}</h2>
-{#        {{ dump(adresse) }}#}
         {% for adress in adresse %}
             <p>{{ adress.adresselivraison }} {{ adress.codepostallivr }} {{ adress.villelivr }}</p>
         {% endfor %}
