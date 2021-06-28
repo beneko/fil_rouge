@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Marques;
 use App\Form\MarquesType;
 use App\Repository\MarquesRepository;
+use App\Repository\ProduitsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use app\Entity\Produits;
 
 /**
  * @Route("/marques")
@@ -76,12 +78,14 @@ class MarquesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="marques_show", methods={"GET"})
+     * @Route("/{id}", name="marques_produits", methods={"GET"})
      */
-    public function show(Marques $marque): Response
+    public function show($id, Marques $marque, ProduitsRepository $produit): Response
     {
-        return $this->render('marques/show.html.twig', [
+        $produits = $produit->produitParMarque($id);
+        return $this->render('marques/produits.html.twig', [
             'marque' => $marque,
+            'produits' => $produits
         ]);
     }
 
@@ -118,4 +122,5 @@ class MarquesController extends AbstractController
 
         return $this->redirectToRoute('marques_index');
     }
+
 }

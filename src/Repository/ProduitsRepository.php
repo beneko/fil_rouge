@@ -34,6 +34,20 @@ class ProduitsRepository extends ServiceEntityRepository
         return $requete->getResult();
 
     }
+    /**
+     * @param $idmarque
+     * @return int|mixed|string
+     */
+    public function produitParMarque($idmarque)
+    {
+        // preparation de requet
+        $requete = $this->_em->createQuery('SELECT p.nom_produit nomProduit, p.id id, p.libelle_produit libelleProduit, p.image image, p.prix_produit prixProduit FROM App\Entity\Produits p WHERE p.id_marque=:id_marque');
+        // binValue to requet
+        $requete->setParameter('id_marque',$idmarque);
+        // retourne les resultats de la requete
+        return $requete->getResult();
+
+    }
 
     // /**
     //  * @return Produits[] Returns an array of Produits objects
