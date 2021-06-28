@@ -194,13 +194,14 @@ function adresseLivraison(Request $request, UtilisateursRepository $user, PaysRe
  * @Route("/choixaddr", name="finalisation_commande")
  */
 public
-function choixAdresse(AdresseLivraisonRepository $adresseLivraisonRepository, UserInterface $user, PaysRepository $paysRepository, PanierService $panierService): Response
+function choixAdresse(AdresseLivraisonRepository $adresseLivraisonRepository,ModesLivraisonRepository $modesLivraisonRepository, UserInterface $user, PaysRepository $paysRepository, PanierService $panierService): Response
 {
     return $this->render('panier/fincom.html.twig', [
         'adresse' => $adresseLivraisonRepository->findBy(['id_utilisateur' => $user->getId()]),
         'pays' => $paysRepository->findAll(),
         'panier' => $panierService->getFullPanier(),
-        'total' => $panierService->getTotal()
+        'total' => $panierService->getTotal(),
+        'modes'=>$modesLivraisonRepository->findAll()
     ]);
 }
 
@@ -226,7 +227,9 @@ function directionBdd(ProduitsRepository $produitsRepository, SessionInterface $
         'id_utilisateur' => $user->getId(),
         'id' => $request->get('id_livr')
     ]));
-    $commandes->setIdModeLivr($mode->find('1'));
+    $commandes->setIdModeLivr($mode->findOneBy([
+        'id'=>$request->get('mode')
+    ]));
     $commandes->setTotalCommande($panier->getTotal());
     $commandes->setDateCom(new \DateTime());
     $entityManager->persist($commandes);
@@ -247,7 +250,7 @@ function directionBdd(ProduitsRepository $produitsRepository, SessionInterface $
                 'id_utilisateur' => $user->getId(),
                 'id' => $request->get('id_livr')
             ]),
-            'id_mode_livr' => '1'
+            'id_mode_livr' => $request->get('mode')
         ]));
         $entityManager->persist($ligcom);
         $entityManager->flush();

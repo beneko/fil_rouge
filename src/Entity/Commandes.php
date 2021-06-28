@@ -12,25 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Commandes
 {
-
-
-    // ...
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $statut = self::STATUT_PANIER;
-
-    /**
-     * An order that is in progress, not placed yet.
-     *
-     * @var string
-     */
-    const STATUT_PANIER = 'panier';
-
-
-
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
