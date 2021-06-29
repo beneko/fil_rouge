@@ -118,91 +118,100 @@ class PanierController extends AbstractController
                 'id_utilisateur' => $user->getId()
             ])) {
                 return $this->redirectToRoute('finalisation_commande');
-            }else{
+            } else {
                 return $this->redirectToRoute('autre_adresse');
             }
-        }else{
+        } else {
             return $this->redirectToRoute('app_login');
         }
 
     }
 
 
-/**
- * @param PanierService $panierService
- * @param TokenStorageInterface $tokenStorage
- * @param PaysRepository $paysRepository
- * @param AdresseLivraisonRepository $adresseLivraisonRepository
- * @param UtilisateursRepository $utilisateursRepository
- * @return RedirectResponse|Response
- * @Route("/autreaddr", name="autre_adresse")
- */
-public
-function testadresse(PanierService $panierService, TokenStorageInterface $tokenStorage, PaysRepository $paysRepository, AdresseLivraisonRepository $adresseLivraisonRepository, UtilisateursRepository $utilisateursRepository)
-{
-    $users = $tokenStorage->getToken() ? $tokenStorage->getToken()->getUser() : null;
-    if ($users != null && $users != 'anon.') {
-        $user = $utilisateursRepository->findOneBy([
-            'mail' => $users->getUsername()
-        ]);
+    /**
+     * @param PanierService $panierService
+     * @param TokenStorageInterface $tokenStorage
+     * @param PaysRepository $paysRepository
+     * @param AdresseLivraisonRepository $adresseLivraisonRepository
+     * @param UtilisateursRepository $utilisateursRepository
+     * @return RedirectResponse|Response
+     * @Route("/autreaddr", name="autre_adresse")
+     */
+    public
+    function testadresse(PanierService $panierService, TokenStorageInterface $tokenStorage, PaysRepository $paysRepository, AdresseLivraisonRepository $adresseLivraisonRepository, UtilisateursRepository $utilisateursRepository)
+    {
+        $users = $tokenStorage->getToken() ? $tokenStorage->getToken()->getUser() : null;
+        if ($users != null && $users != 'anon.') {
+            $user = $utilisateursRepository->findOneBy([
+                'mail' => $users->getUsername()
+            ]);
 
-        return $this->render('panier/validation.html.twig', [
-            'panier' => $panierService->getFullPanier(),
-            'total' => $panierService->getTotal(),
-            'pays' => $paysRepository->findAll(),
-            'adresse' => $adresseLivraisonRepository->findby([
-                'id_utilisateur' => $user->getId()
-            ])
-        ]);
-    } else {
-        return $this->redirectToRoute('app_login');
+            return $this->render('panier/validation.html.twig', [
+                'panier' => $panierService->getFullPanier(),
+                'total' => $panierService->getTotal(),
+                'pays' => $paysRepository->findAll(),
+                'adresse' => $adresseLivraisonRepository->findby([
+                    'id_utilisateur' => $user->getId()
+                ])
+            ]);
+        } else {
+            return $this->redirectToRoute('app_login');
+        }
+
     }
 
-}
+
+    /**
+     * @param Request $request
+     * @param UtilisateursRepository $user
+     * @param PaysRepository $paysRepository
+     * @return Response
+     * @Route("/panier/addr", name="panier_adresse")
+     */
+    public
+    function adresseLivraison(Request $request, UtilisateursRepository $user, PaysRepository $paysRepository, PanierService $panierService): Response
+    {
+        $adresselivraison = new AdresseLivraison();
+        $entityManager = $this->getDoctrine()->getManager();
+        $adresselivraison->setCodePostalLivr($request->get('codep'));
+        $adresselivraison->setIdUtilisateur($user->find($request->get('id')));
+        $adresselivraison->setVilleLivr($request->get('ville'));
+        $adresselivraison->setAdresseLivraison($request->get('adresse'));
+        $adresselivraison->setIdPays($paysRepository->find($request->get('pays')));
+        if ($request->get('fact') == 'true') {
+            $adresselivraison->setAdrFacturation('1');
+        } else {
+            $adresselivraison->setAdrFacturation('0');
+        }
+        $entityManager->persist($adresselivraison);
+        $entityManager->flush();
+        return $this->render('panier/index.html.twig', [
+            'panier' => $panierService->getFullPanier(),
+            'total' => $panierService->getTotal()
+        ]);
+
+    }
 
 
-/**
- * @param Request $request
- * @param UtilisateursRepository $user
- * @param PaysRepository $paysRepository
- * @return Response
- * @Route("/panier/addr", name="panier_adresse")
- */
-public
-function adresseLivraison(Request $request, UtilisateursRepository $user, PaysRepository $paysRepository): Response
-{
-    $adresselivraison = new AdresseLivraison();
-    $entityManager = $this->getDoctrine()->getManager();
-    $adresselivraison->setCodePostalLivr($request->get('codep'));
-    $adresselivraison->setIdUtilisateur($user->find($request->get('id')));
-    $adresselivraison->setVilleLivr($request->get('ville'));
-    $adresselivraison->setAdresseLivraison($request->get('adresse'));
-    $adresselivraison->setIdPays($paysRepository->find($request->get('pays')));
-    $entityManager->persist($adresselivraison);
-    $entityManager->flush();
-    return $this->render('home/index.html.twig');
-
-}
-
-
-/**
- * @param AdresseLivraisonRepository $adresseLivraisonRepository
- * @param UserInterface $user
- * @param PaysRepository $paysRepository
- * @param PanierService $panierService
- * @return Response
- * @Route("/choixaddr", name="finalisation_commande")
- */
-public
-function choixAdresse(AdresseLivraisonRepository $adresseLivraisonRepository, UserInterface $user, PaysRepository $paysRepository, PanierService $panierService): Response
-{
-    return $this->render('panier/fincom.html.twig', [
-        'adresse' => $adresseLivraisonRepository->findBy(['id_utilisateur' => $user->getId()]),
-        'pays' => $paysRepository->findAll(),
-        'panier' => $panierService->getFullPanier(),
-        'total' => $panierService->getTotal()
-    ]);
-}
+    /**
+     * @param AdresseLivraisonRepository $adresseLivraisonRepository
+     * @param UserInterface $user
+     * @param PaysRepository $paysRepository
+     * @param PanierService $panierService
+     * @return Response
+     * @Route("/choixaddr", name="finalisation_commande")
+     */
+    public
+    function choixAdresse(AdresseLivraisonRepository $adresseLivraisonRepository, ModesLivraisonRepository $modesLivraisonRepository, UserInterface $user, PaysRepository $paysRepository, PanierService $panierService): Response
+    {
+        return $this->render('panier/fincom.html.twig', [
+            'adresse' => $adresseLivraisonRepository->findBy(['id_utilisateur' => $user->getId()]),
+            'pays' => $paysRepository->findAll(),
+            'panier' => $panierService->getFullPanier(),
+            'total' => $panierService->getTotal(),
+            'modes' => $modesLivraisonRepository->findAll()
+        ]);
+    }
 
 
     /**
@@ -217,46 +226,52 @@ function choixAdresse(AdresseLivraisonRepository $adresseLivraisonRepository, Us
      * @return RedirectResponse
      * @Route("/paniervalide", name="panier_valide")
      */
-public
-function directionBdd(ProduitsRepository $produitsRepository, SessionInterface $session, CommandesRepository $commandesRepository, Request $request, AdresseLivraisonRepository $adresseLivraisonRepository, UserInterface $user, ModesLivraisonRepository $mode, PanierService $panier): RedirectResponse
-{
-    $entityManager = $this->getDoctrine()->getManager();
-    $commandes = new Commandes();
-    $commandes->setIdAddrLivr($adresseLivraisonRepository->findOneBy([
-        'id_utilisateur' => $user->getId(),
-        'id' => $request->get('id_livr')
-    ]));
-    $commandes->setIdModeLivr($mode->find('1'));
-    $commandes->setTotalCommande($panier->getTotal());
-    $commandes->setDateCom(new \DateTime());
-    $entityManager->persist($commandes);
-    $entityManager->flush();
-
-    $pan = $session->get('panier');
-    foreach ($pan as $produit => $qte) {
-        $ligcom = new LigCom();
-        $ligcom->setIdProduit($produitsRepository->findOneBy([
-            'id' => $produit
+    public
+    function directionBdd(ProduitsRepository $produitsRepository, SessionInterface $session, CommandesRepository $commandesRepository, Request $request, AdresseLivraisonRepository $adresseLivraisonRepository, UserInterface $user, ModesLivraisonRepository $mode, PanierService $panier): RedirectResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $commandes = new Commandes();
+        $commandes->setIdAddrLivr($adresseLivraisonRepository->findOneBy([
+            'id_utilisateur' => $user->getId(),
+            'id' => $request->get('id_livr')
         ]));
-        $ligcom->setQteProduit($qte);
-        $ligcom->setComSousTot(($produitsRepository->findOneBy(['id' => $produit])->getPrixProduit() ** $qte));
-        $ligcom->setRemise('0');
-        $ligcom->setRefCommande($commandesRepository->findOneBy([
-            'total_commande' => $panier->getTotal(),
-            'id_addr_livr' => $adresseLivraisonRepository->findOneBy([
-                'id_utilisateur' => $user->getId(),
-                'id' => $request->get('id_livr')
-            ]),
-            'id_mode_livr' => '1'
+        $commandes->setIdModeLivr($mode->findOneBy([
+            'id' => $request->get('mode')
         ]));
-        $entityManager->persist($ligcom);
+        $commandes->setTotalCommande($panier->getTotal());
+        $commandes->setDateCom(new \DateTime());
+        $commandes->setAdrFact($adresseLivraisonRepository->findOneBy([
+            'id_utilisateur' => $user->getId(),
+            'id' => $request->get('fact')
+        ]));
+        $entityManager->persist($commandes);
         $entityManager->flush();
+
+        $pan = $session->get('panier');
+        foreach ($pan as $produit => $qte) {
+            $ligcom = new LigCom();
+            $ligcom->setIdProduit($produitsRepository->findOneBy([
+                'id' => $produit
+            ]));
+            $ligcom->setQteProduit($qte);
+            $ligcom->setComSousTot(($produitsRepository->findOneBy(['id' => $produit])->getPrixProduit() ** $qte));
+            $ligcom->setRemise('0');
+            $ligcom->setRefCommande($commandesRepository->findOneBy([
+                'total_commande' => $panier->getTotal(),
+                'id_addr_livr' => $adresseLivraisonRepository->findOneBy([
+                    'id_utilisateur' => $user->getId(),
+                    'id' => $request->get('id_livr')
+                ]),
+                'id_mode_livr' => $request->get('mode')
+            ]));
+            $entityManager->persist($ligcom);
+            $entityManager->flush();
+        }
+        $panier->supprimerPanier();
+        return $this->redirectToRoute('home');
+
+
     }
-    $panier->supprimerPanier();
-    return $this->redirectToRoute('home');
-
-
-}
 
 
 }

@@ -13,6 +13,9 @@
 
     {# Link style.css #}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styleH2.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
+
 
 
     {# Run `composer require symfony/webpack-encore-bundle`
@@ -30,7 +33,7 @@
 
 {# Nav header #}
 <header>
-    <div class="container">
+    <div class="container mb-5">
         <div class="row p-3  align-items-center">
 
             {# Logo #}
@@ -89,12 +92,20 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#">Tablettes</a>
-                            </li>
-                            
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#">PC</a>
-                            </li>
-
+                            <li>
+                                <a href="" class="Desktop">Desktop</a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a href="" class="choix1">Choix 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="" class="choix2">Choix 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="" class="choix3">Choix 3</a>
+                                    </li>
+                                </ul>
+                            <li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#">Laptop</a>
                             </li>
@@ -104,12 +115,57 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#">Accessoires</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('marques_index') }}">Marques</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
         </div>
     </div>
+
+{#    <nav class="nav text-center ">#}
+{#        <ul class="bg-dark">#}
+{#            <li >#}
+{#                <a href="" class="Accueil">Accueil</a>#}
+{#            </li>#}
+{#            <li>#}
+{#                <a href="" class="smartphone">Smartphones</a>#}
+{#            </li>#}
+{#            <li>#}
+{#                <a href="" class="tablette">Tablettes</a>#}
+{#            </li>#}
+{#            <li>#}
+{#                <a href="" class="Desktop">Desktop</a>#}
+{#                <ul class="sub-menu">#}
+{#                    <li>#}
+{#                        <a href="" class="choix1">Choix 1</a>#}
+{#                    </li>#}
+{#                    <li>#}
+{#                        <a href="" class="choix2">Choix 2</a>#}
+{#                    </li>#}
+{#                    <li>#}
+{#                        <a href="" class="choix3">Choix 3</a>#}
+{#                    </li>#}
+{#                </ul>#}
+{#            <li>#}
+{#                <a href="" class="laptop">laptop</a>#}
+{#            </li>#}
+{#            <li>#}
+{#                <a href="" class="photovideo">Photo & video</a>#}
+{#            </li>#}
+{#            <li>#}
+{#                <a href="" class="accessoire">Accessoires</a>#}
+{#            </li>#}
+{#        </ul>#}
+{#        </li>#}
+{#        </ul>#}
+{#    </nav>#}
+
+
+
+
     {# End Nav Acceuil #}
 </header>
 {# End Nav header #}
