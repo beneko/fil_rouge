@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoriesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class Categories
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $image_cat;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Produits::class, mappedBy="category", orphanRemoval=true)
+     */
+    private $Produits;
+
+    public function __construct()
+    {
+        $this->Produits = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +102,36 @@ class Categories
     public function setImageCat(?string $image_cat): self
     {
         $this->image_cat = $image_cat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Produits[]
+     */
+    public function getProduits(): Collection
+    {
+        return $this->Produits;
+    }
+
+    public function addProduit(Produits $produit): self
+    {
+        if (!$this->Produits->contains($produit)) {
+            $this->Produits[] = $produit;
+            $produit->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produits $produit): self
+    {
+        if ($this->Produits->removeElement($produit)) {
+            // set the owning side to null (unless already changed)
+            if ($produit->getCategorie() === $this) {
+                $produit->setCategorie(null);
+            }
+        }
 
         return $this;
     }

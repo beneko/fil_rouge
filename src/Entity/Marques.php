@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MarquesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,16 @@ class Marques
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $logo_marque;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Produits::class, mappedBy="id_marque", orphanRemoval=true)
+     */
+    private $produits;
+
+    public function __construct()
+    {
+        $this->produits = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -76,6 +88,36 @@ class Marques
 
     public function __tostring():string{
         return $this->nom_marque;
+    }
+
+    /**
+     * @return Collection|Produits[]
+     */
+    public function getProduits(): Collection
+    {
+        return $this->produits;
+    }
+
+    public function addProduit(Produits $produit): self
+    {
+        if (!$this->produits->contains($produit)) {
+            $this->produits[] = $produit;
+            $produit->setIdMarque($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produits $produit): self
+    {
+        if ($this->produits->removeElement($produit)) {
+            // set the owning side to null (unless already changed)
+            if ($produit->getIdMarque() === $this) {
+                $produit->setIdMarque(null);
+            }
+        }
+
+        return $this;
     }
 
 

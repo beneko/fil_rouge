@@ -43,7 +43,7 @@ class Produits
     private $pds_produit;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Marques::class)
+     * @ORM\ManyToOne(targetEntity=Marques::class, inversedBy="produits")
      * @ORM\JoinColumn(nullable=false)
      */
     private $id_marque;
@@ -54,9 +54,11 @@ class Produits
     private $image;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Categories::class)
+     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="produits")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $categorie;
+
 
     public function getId(): ?int
     {
@@ -158,4 +160,5 @@ class Produits
 
         return $this;
     }
+
 }

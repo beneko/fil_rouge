@@ -20,6 +20,14 @@
                 <th>NomProduits</th>
                 <td>{{ produit.nomProduit }}</td>
             </tr>
+            <tr class="marque">
+                <th>Marque</th>
+                <td>{{ produit.idMarque }}</td>
+            </tr>
+            <tr class="categorie">
+                <th>Categorie</th>
+                <td>{{ produit.categorie }}</td>
+            </tr>
             <tr>
                 <th>Description</th>
                 <td>{{ produit.libelleProduit }}</td>
@@ -36,6 +44,10 @@
             <tr class="poids">
                 <th>Poids du {{ produit.nomProduit }} en kg</th>
                 <td>{{ produit.pdsProduit }}</td>
+            </tr>
+            <tr class="marque">
+                <th>Marque</th>
+                <td>{{ produit.idMarque }}</td>
             </tr>
             </tbody>
         </table>
