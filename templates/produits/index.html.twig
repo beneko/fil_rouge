@@ -16,12 +16,12 @@
                             <img src="{{asset('/images/')~produit.image}}" class="img-fluid card-img-top " id="pictures" alt="Photo smartphone">
                         </div>
                         <div class="card-body">
-                            <p class="display-6 card-title"><b>{{ produit.nomProduit }}</b></p>
-                            <h5 class=" card-text">{{ produit.libelleProduit }}</h5>
+                            <h4 class="card-title "><b>{{ produit.nomProduit }}</b></h4>
+                            <h6 class="mb-3 card-text one_line">{{ produit.libelleProduit }}</h6>
+                            <p class="h5 mt-auto text-danger">{{ produit.prixProduit }} €</p>
                         </div>
-                        <div class="card-footer">
-                            <a href="{{ path('produits_show', {'id': produit.id}) }}" class="btn btn-dark  btn-block">Voir plus</a>
-                            <span class="h4 mt-auto ">{{ produit.prixProduit }} €</span>
+                        <div class="card-footer ">
+                                <a href="{{ path('produits_show', {'id': produit.id}) }}" class="btn btn-outline-danger  btn-block rounded-pill">Voir plus</a>
                         </div>
                     </div>
                 </div>
@@ -32,3 +32,4 @@
             {% endfor %}
         </div>
 {% endblock %}
+
