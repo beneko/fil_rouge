@@ -7,11 +7,13 @@ namespace App\Controller;
 use App\Entity\AdresseLivraison;
 use App\Entity\Commandes;
 use App\Entity\LigCom;
+use App\Entity\Panier;
 use App\Entity\Produits;
 use App\Entity\Utilisateurs;
 use App\Repository\AdresseLivraisonRepository;
 use App\Repository\CommandesRepository;
 use App\Repository\ModesLivraisonRepository;
+use App\Repository\PanierRepository;
 use App\Repository\PaysRepository;
 use App\Repository\ProduitsRepository;
 use App\Repository\UtilisateursRepository;
@@ -22,6 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -35,19 +38,42 @@ class PanierController extends AbstractController
 {
 
     /**
+     * @param Request $request
+     * @param ProduitsRepository $produitsRepository
+     * @param UtilisateursRepository $utilisateursRepository
      * @param PanierService $panierService
+     * @param TokenStorageInterface $tokenStorage
+     * @param PanierRepository $panierRepository
      * @return Response
      * @Route("/panier", name="panier_index")
      */
-    public function index(Request $request, PanierService $panierService): Response
+    public function index(Request $request,ProduitsRepository $produitsRepository, UtilisateursRepository $utilisateursRepository, PanierService $panierService,TokenStorageInterface $tokenStorage, PanierRepository $panierRepository): Response
     {
-
 
         if ($request->getMethod() === "POST") {
             $panierService->updateNumber($request);
+            $users = $tokenStorage->getToken() ? $tokenStorage->getToken()->getUser() : null;
+            if ($users != null && $users != 'anon.') {
+                $tableau = $request->get('quantite');
+                foreach ($tableau as $idp=>$qte) {
+                    $cart = $panierRepository->findOneBy([
+                        'produit'=>$produitsRepository->findOneBy([
+                            'id'=>$idp
+                        ]),
+                        'utilisateur'=>$utilisateursRepository->findOneBy([
+                            'mail'=>$users->getUsername()
+                        ])
+                    ]);
+                    $cart->setQuantite($qte);
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->merge($cart);
+                    $entityManager->flush();
+                }
+
+            }
             return $this->redirectToRoute("panier_index");
         }
-//        dd($panierAvecDonnee);
+
         return $this->render('panier/index.html.twig', [
             'panier' => $panierService->getFullPanier(),
             'total' => $panierService->getTotal()
@@ -57,13 +83,29 @@ class PanierController extends AbstractController
     /**
      * @param $id
      * @param PanierService $panierService
+     * @param UtilisateursRepository $utilisateursRepository
+     * @param TokenStorageInterface $tokenStorage
+     * @param ProduitsRepository $produitsRepository
      * @return RedirectResponse
      * @Route("/panier/ajouter/{id}", name="panier_add")
      */
-    public function add($id, PanierService $panierService)
+    public function add($id, PanierService $panierService,UtilisateursRepository $utilisateursRepository,TokenStorageInterface $tokenStorage,ProduitsRepository $produitsRepository): RedirectResponse
     {
         $panierService->add($id);
-
+        $users = $tokenStorage->getToken() ? $tokenStorage->getToken()->getUser() : null;
+        if ($users != null && $users != 'anon.') {
+            $cart = new Panier();
+            $cart->setQuantite('1');
+            $cart->setProduit($produitsRepository->findOneBy([
+                'id'=>$id
+            ]));
+            $cart->setUtilisateur($utilisateursRepository->findOneBy([
+                'mail'=>$users->getUsername()
+            ]));
+            $entityManager= $this->getDoctrine()->getManager();
+            $entityManager->persist($cart);
+            $entityManager->flush();
+        }
 
         return $this->redirectToRoute("panier_index");
 
@@ -73,25 +115,62 @@ class PanierController extends AbstractController
     /**
      * @param $id
      * @param PanierService $panierService
+     * @param UtilisateursRepository $utilisateursRepository
+     * @param ProduitsRepository $produitsRepository
+     * @param TokenStorageInterface $tokenStorage
+     * @param PanierRepository $panierRepository
      * @return RedirectResponse
      * @Route("/panier/remove/{id}", name="panier_remove")
      */
-    public function remove($id, PanierService $panierService): RedirectResponse
+    public function remove($id, PanierService $panierService,UtilisateursRepository $utilisateursRepository,ProduitsRepository $produitsRepository,TokenStorageInterface $tokenStorage, PanierRepository $panierRepository): RedirectResponse
     {
 
         $panierService->remove($id);
+        $users = $tokenStorage->getToken() ? $tokenStorage->getToken()->getUser() : null;
+        if ($users != null && $users != 'anon.') {
+//            $cart = new Panier();
+            $cart =$panierRepository->findOneBy([
+                'produit'=>$produitsRepository->findOneBy([
+                    'id'=>$id
+                ]),
+               'utilisateur'=> $utilisateursRepository->findOneBy([
+                   'mail'=>$users->getUsername()
+               ])
+            ]);
+            $entityManager= $this->getDoctrine()->getManager();
+            $entityManager->remove($cart);
+            $entityManager->flush();
+        }
+
         return $this->redirectToRoute("panier_index");
     }
 
 
     /**
      * @param PanierService $panierService
+     * @param UtilisateursRepository $utilisateursRepository
+     * @param TokenStorageInterface $tokenStorage
+     * @param PanierRepository $panierRepository
      * @return RedirectResponse
      * @Route("/panier/removeAll", name="panier_remove_all")
      */
-    public function removeAll(PanierService $panierService): RedirectResponse
+    public function removeAll(PanierService $panierService,UtilisateursRepository $utilisateursRepository, TokenStorageInterface $tokenStorage, PanierRepository $panierRepository): RedirectResponse
     {
         $panierService->supprimerPanier();
+        $users = $tokenStorage->getToken() ? $tokenStorage->getToken()->getUser() : null;
+        if ($users != null && $users != 'anon.') {
+            $cart = $panierRepository->findBy([
+                'utilisateur'=>$utilisateursRepository->findOneBy([
+                    'mail'=>$users->getUsername()
+            ])]);
+            foreach ($cart as $adel) {
+//                dd($adel);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($adel);
+                $entityManager->flush();
+            }
+
+        }
         return $this->redirectToRoute("panier_index");
     }
 
@@ -165,6 +244,7 @@ class PanierController extends AbstractController
      * @param Request $request
      * @param UtilisateursRepository $user
      * @param PaysRepository $paysRepository
+     * @param PanierService $panierService
      * @return Response
      * @Route("/panier/addr", name="panier_adresse")
      */
@@ -195,6 +275,7 @@ class PanierController extends AbstractController
 
     /**
      * @param AdresseLivraisonRepository $adresseLivraisonRepository
+     * @param ModesLivraisonRepository $modesLivraisonRepository
      * @param UserInterface $user
      * @param PaysRepository $paysRepository
      * @param PanierService $panierService
@@ -254,7 +335,7 @@ class PanierController extends AbstractController
                 'id' => $produit
             ]));
             $ligcom->setQteProduit($qte);
-            $ligcom->setComSousTot(($produitsRepository->findOneBy(['id' => $produit])->getPrixProduit() ** $qte));
+            $ligcom->setComSousTot(($produitsRepository->findOneBy(['id' => $produit])->getPrixProduit() * $qte));
             $ligcom->setRemise('0');
             $ligcom->setRefCommande($commandesRepository->findOneBy([
                 'total_commande' => $panier->getTotal(),

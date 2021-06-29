@@ -4,11 +4,16 @@
 namespace App\Service\Panier;
 
 
+use App\Entity\Panier;
+use App\Entity\Utilisateurs;
 use App\Repository\ProduitsRepository;
+use App\Repository\UtilisateursRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
@@ -33,12 +38,23 @@ class PanierService extends AbstractType
      */
     protected $request;
 
+//    /**
+//     * @var TokenStorageInterface
+//     */
+//    private $tokenStorage;
+//
+//    /**
+//     * @var UtilisateursRepository
+//     */
+//private $utilisateursRepository;
 
     /**
      * PanierService constructor.
      * @param SessionInterface $session
      * @param ProduitsRepository $produitsRepository
-     * @param Request $request
+     * @param RequestStack $requestStack
+     * @param TokenStorageInterface $tokenStorage
+     * @param UtilisateursRepository $utilisateursRepository
      */
     public function __construct(SessionInterface $session, ProduitsRepository $produitsRepository, RequestStack $requestStack)
     {
