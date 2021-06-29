@@ -8,59 +8,48 @@
 
 
 {% block body %}
-    <h1 class="text-center text-md-start">{{ produit.nomProduit }}</h1>
 
-    <div class="content d-flex flex-column flex-md-row">
-        <div class=" col-md-6 d-flex justify-content-center">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 d-flex justify-content-center">
             <img class="img" src="{{ asset('/images/')~produit.image }}">
         </div>
-        <table class="table mt-2 mt-md-0">
-            <tbody>
-            <tr>
-                <th>NomProduits</th>
-                <td>{{ produit.nomProduit }}</td>
-            </tr>
-            <tr class="marque">
-                <th>Marque</th>
-                <td>{{ produit.idMarque }}</td>
-            </tr>
-            <tr class="categorie">
-                <th>Categorie</th>
-                <td>{{ produit.categorie }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ produit.libelleProduit }}</td>
-            </tr>
-            <tr>
-                <th>Prix du {{ produit.nomProduit }}</th>
-                <td>{{ produit.prixProduit }}</td>
-            </tr>
-            <tr>
-                <th>Quantité restante du {{ produit.nomProduit }}</th>
-                <td>{{ produit.stockProduit }}</td>
-            </tr>
+        <div class="col-sm-12 col-md-6 d-flex justify-content-center">
+            <table class="table mt-2 mt-md-0">
+                <tbody>
+                <tr>
+                    <th>Nom du produit</th>
+                    <td><b>{{ produit.nomProduit }}</b></td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ produit.libelleProduit }}</td>
+                </tr>
+                <tr>
+                    <th>Prix du {{ produit.nomProduit }}</th>
+                    <td>{{ produit.prixProduit }}</td>
+                </tr>
+                <tr>
+                    <th>Quantité restante du {{ produit.nomProduit }}</th>
+                    <td>{{ produit.stockProduit }}</td>
+                </tr>
 
-            <tr class="poids">
-                <th>Poids du {{ produit.nomProduit }} en kg</th>
-                <td>{{ produit.pdsProduit }}</td>
-            </tr>
-            <tr class="marque">
-                <th>Marque</th>
-                <td>{{ produit.idMarque }}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+                <tr class="poids">
+                    <th>Poids du {{ produit.nomProduit }} en kg</th>
+                    <td>{{ produit.pdsProduit }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 
     <div class="d-flex flex-row justify-content-center pb-200">
-        <a href="{{ path('produits_index') }}" class="btn btn-dark m-0 me-1">Retour</a>
+        <a href="{{ path('produits_index') }}" class="btn btn-dark mb-3 m-0 me-1 rounded-pill">Retour</a>
 
-{#        <a href="{{ path('produits_edit', {'id': produit.id}) }}" class="btn btn-warning m-0 ms-1 me-1">Modifier</a>#}
-        <a href="{{ path('panier_add', {'id': produit.id }) }}" class="btn btn-info ms-1 me-1"> ajouter au panier</a>
+        {# <a href="{{ path('produits_edit', {'id': produit.id}) }}" class="btn btn-warning m-0 ms-1 me-1">Modifier</a> #}
+        <a href="{{ path('panier_add', {'id': produit.id }) }}" class="btn btn-danger mb-3 ms-1 me-1 rounded-pill">
+            ajouter au panier</a>
 
-{#        {{ include('produits/_delete_form.html.twig') }}#}
+        {# {{ include('produits/_delete_form.html.twig') }} #}
     </div>
 {% endblock %}

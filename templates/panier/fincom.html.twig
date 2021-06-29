@@ -64,5 +64,26 @@
                     <a href="{{ path('autre_adresse') }}" class="btn btn-info">Entrer une autre adresse de livraison
                         et/ou de facturation</a></div>
             </div>
-        </form>
+            <div class="card">
+                {% for objet in panier %}
+                <div class="card-body">
+                    <table class="table responsive">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                    </table>table>
+                </div>
+                {% else %}
+                    <div class="card-footer">
+                        <p colspan="8">phrase de refus</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <label for="total">Total à payer : </label>
+            <input type="text" value="{{ total }}€" disabled id="total">
+            <input type="submit" class="btn btn-success" value="valider la commande">
+            <a href="{{ path('autre_adresse') }}">Entrer une autre adresse</a>
     {% endblock %}
