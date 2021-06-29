@@ -19,6 +19,31 @@ class CategoriesRepository extends ServiceEntityRepository
         parent::__construct($registry, Categories::class);
     }
 
+
+
+
+    public function getCategorie()
+    {
+        // preparation de requet
+        $requete = $this->_em->createQuery('SELECT c FROM App\Entity\Categories c WHERE c.id_cat IS NULL');
+        // binValue to requet
+//        $requete->setParameter();
+        // retourne les resultats de la requete
+        return $requete->getResult();
+
+    }
+//
+    public function getsubcategorie()
+    {
+        // preparation de requet
+        $requete = $this->_em->createQuery('SELECT c FROM App\Entity\Categories c WHERE c.id_cat IS NOT NULL');
+        // binValue to requet
+//        $requete->setParameter();
+        // retourne les resultats de la requete
+        return $requete->getResult();
+
+    }
+
     // /**
     //  * @return Categories[] Returns an array of Categories objects
     //  */
