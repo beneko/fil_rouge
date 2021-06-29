@@ -24,7 +24,7 @@ class UtilisateursController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function new(Request $request): Response
+    public function new(Request $request,\Swift_Mailer $mailer): Response
     {
         $utilisateur = new Utilisateurs();
         $form = $this->createForm(UtilisateursType::class, $utilisateur);
@@ -37,9 +37,29 @@ class UtilisateursController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($utilisateur);
             $entityManager->flush();
+
+            $message = (new \Swift_Message('Inscription'))
+                // On attribue l'expéditeur
+                ->setFrom('test@test.fr')
+
+                // On attribue le destinataire
+                ->setTo($utilisateur->getMail())
+
+                // On crée le texte avec la vue
+                ->setBody(
+                    $this->renderView(
+                        'emails/inscription.html.twig', [
+                            'nom' => $utilisateur->getNom(),
+                        ]
+                    ),
+                    'text/html'
+                );
+
+            $mailer->send($message);
+
             $this->addFlash(
                 'success',
-                'Vous vous êtes bien inscrit ! !!'
+                'Vous vous êtes bien inscrit !!!'
             );
             return $this->redirectToRoute('app_login');
         }
